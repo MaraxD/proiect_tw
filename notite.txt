@@ -1,0 +1,4 @@
+git init->initializarea unui repo local
+dir /a->afisarea fisierelor ascunse
+git add . sau git add --all sau doar numele fisierului pe care vrei sa l adaugi
+git add .gitignore tine fisierele pe care git sa le ignore dupa ce dai commit
