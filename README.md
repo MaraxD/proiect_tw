@@ -26,4 +26,4 @@ Evernote
 https://evernote.com/
 
 Notion
-notion.so
+https://www.notion.so/
