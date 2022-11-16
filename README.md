@@ -10,7 +10,7 @@ The platform is based on a Single Page Application architecture. It will be acce
 The note editor should be easy to use so that the student can take notes during the class. It will implement a markdown sistem to allow simple text formatting.
 
 Minimal functionalities:
-As a student I want to be able to login with my institutional account (@stud.ase.ro) to manage my notes. (usign oauth)
+As a student I want to be able to login with my institutional account (@stud.ase.ro) to manage my notes. (using oauth)
 As a student I want to be able to view, add, edit and delete notes so that I can better organize information (CRUD operations)
 As a student I want the option to add attachments (images, documents) to the notes I take so that I can have more details about the subject
 As a student I want to be able to organize notes based on classes, date, labels (tags) and keywords so that I can retrieve information easily (see oneNote)
