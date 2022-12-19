@@ -1,0 +1,5 @@
+TODO: 
+    ->when deleting a student, its notes should also be gone
+    ->add CRUD routers for notes
+    ->write the code in mainRouter
+    ->test it
