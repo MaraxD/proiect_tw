@@ -20,14 +20,24 @@ const User=sequelize.define("user",{
         validate:{
             isEmail:true,
             mailValidation(value){
-                if(!value.includes("@stud.ase.ro")){
+                if(!value.contains("@stud.ase.ro")){
                     throw new Error("you didn t log in with the faculty email")
                 }
             }
         }
     },
-    phoneNr:{
+    password:{
         type:DataTypes.STRING,
+        allowNull:false,
+        validate:{
+            len:[5,10],
+            // isComplex(pass){
+            //     if(!pass.contains("?"))
+            // }
+        }
+    },
+    phoneNr:{
+        type:DataTypes.DOUBLE,
         allowNull:true,
         validate:{
             phoneValidation(number){
