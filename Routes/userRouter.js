@@ -1,8 +1,23 @@
 import express, { response } from "express"
-import { User } from "../Models/user"
-import { Notes } from "../Models/notes"
+import { User } from "../Models/user.js"
+import { Notes } from "../Models/notes.js"
 
 const userRouter=express.Router()
+
+//get students (for testing only)
+userRouter.get("/allUsers",async(req,res)=>{
+    try {
+        const users=await User.findAll()
+        if(users.length>0){
+            res.json(users)
+        }else{
+            res.json("there are no users in the db yet")
+        }
+    } catch (error) {
+        res.status(404).json({"message":"smth when wrong when getting the data"})
+    }
+})
+
 
 //adding a user to the database
 userRouter.post("/addNewUser",async(req,res)=>{
@@ -50,7 +65,7 @@ userRouter.put("/:userId/users",async(req,res)=>{
 userRouter.delete("/:userId/users",async(req,res)=>{
     try {
         //before deleting the user i will also get its notes and delete them 
-        const user=await User.findBy(req.params.userId)
+        const user=await User.findByPk(req.params.userId)
         if(user){
             await user.destroy()
             return res.status(200).json("student deleted")
@@ -63,5 +78,13 @@ userRouter.delete("/:userId/users",async(req,res)=>{
     
 })
 
-
 //TODO: filter the notes of a student (by title, by date created, etc)
+
+//add a note
+// var date=new Date()
+//                 var dd=String(date.getDate()).padStart(2,'0')
+//                 var mm=String(date.getMonth()+1).padStart(2,'0')
+//                 var yyyy=date.getFullYear()
+//                 date=dd+'/'+mm+'/'+yyyy
+                
+export {userRouter}

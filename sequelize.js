@@ -5,4 +5,8 @@ const sequelize=new Sequelize({
     storage:"./sqlite/app.db"
 });
 
+sequelize.sync({alter:true}).then(()=>{
+    console.log("all the models have been synchronized")
+})
+
 export {sequelize}
