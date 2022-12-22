@@ -1,0 +1,23 @@
+-Un modul folositor este nodemon care ruleaza serverul, dar in momentul in care sunt efectuate modificari
+este actualizat si serverul fara sa mai opresti si sa pornesti iar
+--!ca sa functioneze trebuie permisa utilizarea scripturilor. Pt windows in powershell utilizat ca administrator
+introdu comanda Set-ExecutionPolicy -ExecutionPolicy RemoteSigned raspuns Y
+-- npm install -g nodemon; -g inseamna pachet global
+- se foloseste ca node deci nodemon server.js porneste serverul
+
+
+
+-cod exemplu ca sa inteleg cum functioneaza google auth
+-schelet basic cu server rute modele etc
+-de facut pe ce ai tu in aplicatie de adaptat
+-auth.js e special
+-se face in google cloud service o aplicatie pui pe external bam bam bam ca sa poti sa faci cu utilizatorului
+    din afara organizatiei tale dupa care cauti credentials mergi in search bar pui credentials mergi in api 
+- in api se creeaza o baza de date cu utilizatori cum ar veni
+
+-acum apare .env 
+
+-In .env punem credentialele obtinute din crearea utilizatorului in console.cloud.google
+    id si secret 
+-cookie key ul introdus poate sa fie orice momentan, banuiesc ca ar putea fi criptat cumva 
+pt securitate dar nu cont acum
