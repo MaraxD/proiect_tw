@@ -1,0 +1,30 @@
+{
+  "name": "training-jwt-auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/r3mz120/training-jwt-auth.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/r3mz120/training-jwt-auth/issues"
+  },
+  "homepage": "https://gitlab.com/r3mz120/training-jwt-auth#readme",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "cookie-session": "^2.0.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3",
+    "passport": "^0.5.2",
+    "passport-google-oauth20": "^2.0.0",
+    "sequelize": "^6.13.0"
+  }
+}
