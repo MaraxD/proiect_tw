@@ -1,6 +1,6 @@
 import express, { response } from "express"
 import { User } from "../Models/user.js"
-import { Notes } from "../Models/notes.js"
+import { Note } from "../Models/note.js"
 
 const userRouter=express.Router()
 
@@ -81,6 +81,23 @@ userRouter.delete("/:userId/users",async(req,res)=>{
 //TODO: filter the notes of a student (by title, by date created, etc)
 
 //add a note
+//mai intai vezi care e id ul studentului care vrea sa adauge o notita
+userRouter.post("/:userId/notes",async(res,req)=>{
+    try {
+        const user=await User.findByPk(req.params.userId)
+        if(user){
+            const note=await Note.create(req.body)
+            user.addNote(note)
+            await user.save()
+            res.status(201).location(note.id).send()
+        }else{
+            res.sendStatus(404)
+        }
+    } catch (error) {
+        res.status(400).json("smth went wrong when adding a note")
+    }
+})
+
 // var date=new Date()
 //                 var dd=String(date.getDate()).padStart(2,'0')
 //                 var mm=String(date.getMonth()+1).padStart(2,'0')

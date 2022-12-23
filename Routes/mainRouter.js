@@ -3,7 +3,7 @@ import {sequelize} from "../sequelize.js"
 import { userRouter } from "./userRouter.js"
 
 import { User } from "../Models/user.js"
-import { Notes } from "../Models/notes.js"
+import { Note } from "../Models/note.js"
 
 const router=express.Router()
 
@@ -25,15 +25,17 @@ router.post("/data",async(req,res)=>{
         for(let u of req.body){
             const user= await User.create(u)
             for(let n of u.notes){
-                const note=await Notes.create(n)
+                const note=await Note.create(n)
+                console.log(note)
                 registry[n.key]=note
-                user.addNotes(n)
+                //nu se insereaza notitele cum trebuie
+                user.addNote(n)
             }        
             await user.save()
         }
         res.status(204).json("data has been added to the DB")
     } catch (error) {
-        res.status(400).json("could not insert data into DB")
+        res.status(400).json(error)
     }
 })
 
@@ -63,7 +65,8 @@ router.get("/data",async(res,req,next)=>{
             result.push(user)
         }
         if(result.length>0){
-            res.json(result)
+            // res.json(result)
+            console.log(result)
         }else{
             console.log("there s no data in the DB")
             //res.json("there s no data in the DB") dc nu merge???

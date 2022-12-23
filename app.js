@@ -5,13 +5,13 @@ import { Sequelize } from "sequelize"
 import { mainRouter } from "./Routes/mainRouter.js"
 
 import { User } from "./Models/user.js"
-import { Notes } from "./Models/notes.js"
+import { Note } from "./Models/note.js"
 import { sequelize } from "./sequelize.js"
 
 const app=express()
 
 //defining the relationship between the two tables
-User.hasMany(Notes)
+User.hasMany(Note)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))

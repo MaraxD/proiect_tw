@@ -20,7 +20,7 @@ const User=sequelize.define("user",{
         validate:{
             isEmail:true,
             mailValidation(value){
-                if(!value.contains("@stud.ase.ro")){
+                if(!value.includes("@stud.ase.ro")){
                     throw new Error("you didn t log in with the faculty email")
                 }
             }
@@ -30,7 +30,7 @@ const User=sequelize.define("user",{
         type:DataTypes.STRING,
         allowNull:false,
         validate:{
-            len:[5,10],
+            len:[4,10],
             // isComplex(pass){
             //     if(!pass.contains("?"))
             // }
@@ -50,13 +50,24 @@ const User=sequelize.define("user",{
     enrlYear:{
         type:DataTypes.INTEGER,
         allowNull:false,
-        validate:{len:[4]}
+        validate:{
+            isValid(year){
+                if(year<1913){
+                    throw new Error("the faculty didn t exist in that time")
+                }
+            }
+        }
     },
     finishYear:{
         type:DataTypes.INTEGER,
         allowNull:false,
-        validate:{len:[4]}
-    }
+        validate:{
+            isValid(year){
+            if(year<1913){
+                throw new Error("the faculty didn t exist in that time")
+            }
+        }}
+    },
 });
 
 
