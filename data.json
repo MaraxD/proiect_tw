@@ -9,7 +9,13 @@
         "finishYear":2023,
         "notes":[
             {
-                "key":1,
+                "key":"noteM1",
+                "dateCreated":"20/12/2022",
+                "title":"first memo",
+                "content":"nuj man ceva scris, lorem ipsum"
+            },
+            {
+                "key":"noteM2",
                 "dateCreated":"20/12/2022",
                 "title":"first memo",
                 "content":"nuj man ceva scris, lorem ipsum"
@@ -28,7 +34,7 @@
         "finishYear":2023,
         "notes":[
             {
-                "key":2,
+                "key":"noteL1",
                 "dateCreated":"20/12/2022",
                 "title":"first memo",
                 "content":"nuj man ceva scris, lorem ipsum"
@@ -46,12 +52,11 @@
         "finishYear":2023,
         "notes":[
             {
-                "key":3,
+                "key":"noteA1",
                 "dateCreated":"20/12/2022",
                 "title":"first memo",
                 "content":"nuj man ceva scris, lorem ipsum"
             }
         ]
-
     }
 ]
