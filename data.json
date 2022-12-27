@@ -58,5 +58,22 @@
                 "content":"nuj man ceva scris, lorem ipsum"
             }
         ]
+    },
+    {
+        "firstName":"Ivan",
+        "lastName":"Maria",
+        "email":"ivanmaria20@stud.ase.ro",
+        "password":"9101",
+        "phoneNr":"0722620120",
+        "enrlYear":2020,
+        "finishYear":2023,
+        "notes":[
+            {
+                "key":"noteA1",
+                "dateCreated":"20/12/2022",
+                "title":"first memo",
+                "content":"nuj man ceva scris, lorem ipsum"
+            }
+        ]
     }
 ]

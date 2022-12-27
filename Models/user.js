@@ -17,6 +17,7 @@ const User=sequelize.define("user",{
     },
     email:{
         type:DataTypes.STRING,
+        unique:true,
         validate:{
             isEmail:true,
             mailValidation(value){
@@ -29,6 +30,7 @@ const User=sequelize.define("user",{
     password:{
         type:DataTypes.STRING,
         allowNull:false,
+        unique:true,
         validate:{
             len:[4,10],
             // isComplex(pass){
@@ -39,6 +41,7 @@ const User=sequelize.define("user",{
     phoneNr:{
         type:DataTypes.STRING,
         allowNull:true,
+        unique:true,
         validate:{
             phoneValidation(number){
                 if(number.length<10){

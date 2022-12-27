@@ -1,7 +1,6 @@
 import express from "express"
 import cors from "cors"
 import bodyParser from "body-parser"
-import { Sequelize } from "sequelize"
 import { mainRouter } from "./Routes/mainRouter.js"
 
 import { User } from "./Models/user.js"

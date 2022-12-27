@@ -12,9 +12,9 @@ router.use("/users",userRouter)
 router.put("/createDB",async(req,res)=>{
     try {
         await sequelize.sync({force:true})
-        res.json("db created")
+        res.status(200).json({"message":"db created"})
     } catch (error) {
-        res.status(400).json("could not create db")
+        res.status(400).json({"message":"could not create db"})
         
     }
 })
@@ -33,13 +33,13 @@ router.post("/data",async(req,res)=>{
             }        
             await user.save()
         }
-        res.status(204).json("data has been added to the DB")
+        res.status(204).json({"message":"data has been added to the DB"})
     } catch (error) {
         res.status(400).json(error)
     }
 })
 
-router.get("/data",async(res,req,next)=>{
+router.get("/data",async(req,res,next)=>{
     try {
         const result=[]
         for(let u of await User.findAll()){
@@ -65,15 +65,12 @@ router.get("/data",async(res,req,next)=>{
             result.push(user)
         }
         if(result.length>0){
-            // res.json(result)
-            console.log(result)
+            res.json(result)
         }else{
-            console.log("there s no data in the DB")
-            //res.json("there s no data in the DB") dc nu merge???
+            res.status(204).json({"message":"there s no data in the DB"}) 
         }
     } catch (error) {
-        next(error)
-        res.statusCode(400).json("could not get data from DB")
+        res.status(400).json({"message":"could not get data from DB"})
     }
 })
 
