@@ -32,9 +32,9 @@ userRouter.post("/addNewUser",async(req,res)=>{
 });
 
 //get a specific user (useful for when a user logs in and the profile should corespond with the email put in the login page)
-userRouter.get("/:userId/users", async(req, res)=>{
+userRouter.get("/:userEmail/users", async(req, res)=>{
     try {
-        const findUser= await User.findByPk(req.params.userId)
+        const findUser= await User.findAll({where:{email: req.params.userEmail}})
         if(findUser){
             res.json(findUser)
         }else{
