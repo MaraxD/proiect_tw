@@ -1,0 +1,3 @@
+->atunci cand user ul se logheaza, automat se face un get user where email e asa, deci la router trebuie 
+    sa modific parametrul dupa ce se cauta (mail nu id->mailul e unic)
+    
