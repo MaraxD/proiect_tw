@@ -1,0 +1,56 @@
+.user{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 400px;
+    height: inherit;
+    border-radius: 50px;
+    border: 2px solid black;    
+
+}
+
+.subUser{
+    margin: 25px 25px 25px 25px;
+    cursor: default;
+}
+
+button{
+    cursor: pointer;
+}
+
+input{
+    cursor: text;
+}
+
+img{
+    height: 100px;
+    width: 100px;
+    
+}
+
+.userPhoto{
+    border-top: 1px solid #808080b1;
+    border-bottom: 1px solid #808080b1;
+}
+
+.btnChange{
+    margin-left: 10px;
+}
+
+.btnDelete{
+    margin-top: 10px;
+}
+
+.personalInfo{
+    border-bottom: 1px solid #808080b1;
+}
+
+.prefName{
+    margin-bottom: 10px;
+}
+
+.btnGroup{
+    margin-top: 10px;
+}
