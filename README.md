@@ -1,5 +1,6 @@
 TODO: <br>
-    ->implementeaza functiile pentru butoane (edit, delete, go back)
+    ->implementeaza functiile pentru butoane (edit, delete, go back)<br>
+    ->the div needs to be centered *no pun intended*<br>
 
 
 
