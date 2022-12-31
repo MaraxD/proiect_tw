@@ -16,6 +16,10 @@ function UserPage(props){
         console.log(data)
     }
 
+    const changeData=()=>{
+
+    }
+
     useEffect(()=>{
         getUser()
     },[])
@@ -40,8 +44,11 @@ function UserPage(props){
                     {/* de implementat editUser, de folosit onClick pe button */}
 
                     <div className='fullName'>
-                        <p>Preferred name</p>                   
-                        <input className="prefName" type="text" value={user[0].firstName+" "+user[0].lastName}/>
+                        <p>Name</p>                   
+                        <input className="prefName" type="text" value={user[0].firstName} onChange={changeData}/>
+
+                        <p>Last name</p>                   
+                        <input className="prefName" type="text" value={user[0].lastName}/>
                     </div>
                 </div>
 

@@ -22,6 +22,11 @@ button{
 
 input{
     cursor: text;
+    display: inline;
+}
+
+.fullName{
+    display: inline;
 }
 
 img{

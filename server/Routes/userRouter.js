@@ -46,18 +46,19 @@ userRouter.get("/:userEmail/users", async(req, res)=>{
 })
 
 //update the student s data
-userRouter.put("/:userId/users",async(req,res)=>{
+userRouter.put("/:userEmail/users",async(req,res)=>{
     try {
-        const user=await user.update(req.body)
+        const user= await User.findAll({where:{email: req.params.userEmail}})
         if(user){
-            return res.status(200).json({"message":"student s info has been updated"})
+            await user.update(req.body)
+            return res.status(204).json({"message":"student s info has been updated"})
         }else{
             return res.status(404).json({"message":`could not find student with the id: ${req.params.userId}`})
         }
 
         
     } catch (error) {
-        return res.status(400).json({"message":"could not update the indo"})
+        return res.status(400).json({"message":"could not update the info"})
     }
 })
 
