@@ -1,23 +1,57 @@
 import {useEffect, useState} from 'react'
 import './userPage.css'
 import image from './user.jpg'
+import MainPage from '../mainPage/MainPage'
 
 const server="http://localhost:8080"
 
 
 function UserPage(props){
     const[user,setUser]=useState([{}])
+    const[name,setName]=useState("")
+    const[lastName,setLName]=useState("")
+    const[email,setEmail]=useState("")
 
     const getUser=async()=>{
         //mailul nu ar trebui hardcodat
         const res=await fetch(`${server}/api/users/olarumara20@stud.ase.ro/users`)
         const data=await res.json()        
         setUser(data)
-        console.log(data)
+        //idk if this is the most efficient way
+        setName(data[0].firstName)
+        setLName(data[0].lastName)
+        setEmail(data[0].setEmail)
     }
 
-    const changeData=()=>{
+    const changeData=async()=>{
+       const res=await fetch(`${server}/api/users/olarumara20@stud.ase.ro/users`,
+        {
+            method:'PUT',
+            headers:{
+                "Content-type":"application/json"
+            },body:JSON.stringify(user[0])
+        })
+        getUser()
 
+    }
+
+    const deleteUser=()=>{
+        fetch(`${server}/api/users/olarumara20@stud.ase.ro/users`,{method:'DELETE'})
+        .then(()=>{
+            console.log("user deleted successfully")
+        })
+    }
+
+    const editData=event=>{
+        if(event.target.className==="name"){
+            setName(event.target.value)
+            user[0].firstName=event.target.value
+            setUser(user)
+        }else if(event.target.className==="lastName"){
+            setLName(event.target.value)
+            user[0].lastName=event.target.value
+            setUser(user)
+        }
     }
 
     useEffect(()=>{
@@ -27,6 +61,7 @@ function UserPage(props){
     return(
         <div className='user'>
             <div className='subUser'>
+                
                 <h3>Account</h3>
                 <div class="userPhoto">
                     <p>Photo</p>
@@ -36,28 +71,28 @@ function UserPage(props){
                 <div className='personalInfo'>
                     <div className='email'> 
                         <p>Email</p>
-                        {user[0].email}
+                        {email}
+                        {/* aici nu stiu inca daca sa las utilizatorul sa si schimbe mailul */}
                         <button className='btnChange'>Change email</button>
                     </div>                     
                     
 
-                    {/* de implementat editUser, de folosit onClick pe button */}
-
                     <div className='fullName'>
                         <p>Name</p>                   
-                        <input className="prefName" type="text" value={user[0].firstName} onChange={changeData}/>
+                        <input className="name" type="text" value={name} onChange={editData}/>
 
                         <p>Last name</p>                   
-                        <input className="prefName" type="text" value={user[0].lastName}/>
+                        <input className="lastName" type="text" value={lastName} onChange={editData}/>
                     </div>
                 </div>
 
                 {/* delete student si se revine pe pagina de login */}
-                <button className='btnDelete'>Delete my account</button>
+                <button className='btnDelete' onClick={deleteUser}>Delete my account</button>
             
 
+                {/* de implementat editUser, de folosit onClick pe button */}
                 <div className='btnGroup'>
-                    <button className='btnUpdate'>Update</button>
+                    <button className='btnUpdate' onClick={changeData}>Update</button>
                     <button className='btnCancel'>Go home</button>
                 </div>
             </div>
@@ -69,3 +104,6 @@ function UserPage(props){
 }
 
 export default UserPage
+
+
+

@@ -49,11 +49,12 @@ userRouter.get("/:userEmail/users", async(req, res)=>{
 userRouter.put("/:userEmail/users",async(req,res)=>{
     try {
         const user= await User.findAll({where:{email: req.params.userEmail}})
-        if(user){
-            await user.update(req.body)
+        const userM=user.shift()
+        if(userM){
+            await userM.update(req.body)
             return res.status(204).json({"message":"student s info has been updated"})
         }else{
-            return res.status(404).json({"message":`could not find student with the id: ${req.params.userId}`})
+            return res.status(404).json({"message":`could not find student with the id: ${req.params.userEmail}`})
         }
 
         
@@ -63,15 +64,16 @@ userRouter.put("/:userEmail/users",async(req,res)=>{
 })
 
 //delete a student
-userRouter.delete("/:userId/users",async(req,res)=>{
+userRouter.delete("/:userEmail/users",async(req,res)=>{
     try {
         //before deleting the user i will also get its notes and delete them 
-        const user=await User.findByPk(req.params.userId)
-        if(user){
-            await user.destroy()
+        const user= await User.findAll({where:{email: req.params.userEmail}})
+        const userM=user.shift()
+        if(userM){
+            await userM.destroy()
             return res.status(200).json({"message":"student deleted"})
         }else{
-            return res.status(404).json({"message":"the student doesn t exits"})
+            return res.status(404).json({"message":"the student doesn t exist"})
         }
     } catch (error) {
         res.status(400).json(error)
