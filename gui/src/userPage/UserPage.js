@@ -20,7 +20,7 @@ function UserPage(props){
         //idk if this is the most efficient way
         setName(data[0].firstName)
         setLName(data[0].lastName)
-        setEmail(data[0].setEmail)
+        setEmail(data[0].email)
     }
 
     const changeData=async()=>{
