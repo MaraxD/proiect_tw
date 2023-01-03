@@ -1,6 +1,6 @@
 TODO: <br>
-    ->implementeaza functiile pentru butoane (edit, delete, go back)<br>
-    ->the div needs to be centered *no pun intended*<br>
+    ->(in userPage) the div needs to be centered *no pun intended*<br>
+    ->(server) cand restartez serverul nu raman in bd notitele unui student??..
 
 
 

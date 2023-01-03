@@ -1,0 +1,39 @@
+th{
+    width: inherit;
+    border: 2px solid grey;
+    height: 100%;
+}
+
+.groupN{
+    border-right: 2px solid white;
+    width: 20%;
+    height: 100%;
+
+}
+
+.notes{
+    border-right: 2px solid white;
+    width: 20%;
+    height: 100%;
+
+}
+
+.contentN{
+    border-right: 2px solid white;
+    width: 100%;
+    height: 100%;
+
+}
+
+input{
+    width: 90%;
+    border-color:white;
+}
+
+ul{
+    
+}
+
+.account{
+    cursor: pointer;
+}

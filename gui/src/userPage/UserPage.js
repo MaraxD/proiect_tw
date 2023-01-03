@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 import './userPage.css'
 import image from './user.jpg'
-import MainPage from '../mainPage/MainPage'
 
 const server="http://localhost:8080"
 
@@ -11,6 +11,7 @@ function UserPage(props){
     const[name,setName]=useState("")
     const[lastName,setLName]=useState("")
     const[email,setEmail]=useState("")
+    const navigate=useNavigate()
 
     const getUser=async()=>{
         //mailul nu ar trebui hardcodat
@@ -39,7 +40,7 @@ function UserPage(props){
         fetch(`${server}/api/users/olarumara20@stud.ase.ro/users`,{method:'DELETE'})
         .then(()=>{
             console.log("user deleted successfully")
-        })
+        }).then(navigate("/login"))
     }
 
     const editData=event=>{
@@ -52,6 +53,10 @@ function UserPage(props){
             user[0].lastName=event.target.value
             setUser(user)
         }
+    }
+
+    const goHome=()=>{
+        navigate("/")
     }
 
     useEffect(()=>{
@@ -93,7 +98,7 @@ function UserPage(props){
                 {/* de implementat editUser, de folosit onClick pe button */}
                 <div className='btnGroup'>
                     <button className='btnUpdate' onClick={changeData}>Update</button>
-                    <button className='btnCancel'>Go home</button>
+                    <button className='btnCancel'onClick={goHome}>Go home</button>
                 </div>
             </div>
             

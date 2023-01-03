@@ -119,6 +119,47 @@ userRouter.post("/:userId/notes",async(req,res)=>{
     }
 })
 
+//update a certain note
+userRouter.put("/:noteId/notes/:userId",async(req,res)=>{
+    try {
+        const user=await User.findByPk(req.params.userId)
+        if(user){
+            const notes=await user.getNotes({where: {id:req.params.noteId}})
+            const note=notes.shift()
+            if(note){
+                await note.update(req.body)
+                return res.status(204).json({"message":"updated with success"})
+            }else{
+                return res.status(404).json({"message":"note with that id doesn t exist"})
+
+            }
+        }
+    } catch (error) {
+        return res.status(400).json({"message":"smth went wrong when updating the note"})
+    }
+})
+
+
+//delete a certain note
+userRouter.delete("/:noteId/notes/:userId",async(req,res)=>{
+    try {
+        const user=await User.findByPk(req.params.userId)
+        if(user){
+            const notes=await user.getNotes({where: {id:req.params.noteId}})
+            const note=notes.shift()
+            if(note){
+                await note.destroy()
+                return res.status(204).json({"message":"deleted with success"})
+            }else{
+                return res.status(404).json({"message":"note with that id doesn t exist"})
+
+            }
+        }
+    } catch (error) {
+        return res.status(400).json({"message":"smth went wrong when deleting the note"})
+    }
+})
+
 // var date=new Date()
 //                 var dd=String(date.getDate()).padStart(2,'0')
 //                 var mm=String(date.getMonth()+1).padStart(2,'0')
