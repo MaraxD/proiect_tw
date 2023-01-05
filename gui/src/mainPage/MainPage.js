@@ -8,6 +8,8 @@ const server="http://localhost:8080"
 function MainPage(){
     const[notes,setNotes]=useState([{}])
     const[state,setState]=useState({query:'',list:[]})
+    const[stateC,setStateC]=useState('') //state ul pentru click
+    const[newElem,setElem]=useState({})
     const navigate=useNavigate()
 
     const getNotes=async()=>{
@@ -17,16 +19,70 @@ function MainPage(){
         setNotes(data)
     }
 
-    const showNote=()=>{
-        console.log("hey")
+    const showNote=(e)=>{
+        if(e!=undefined){
+            setStateC('clicked')
+            let noteFound=notes.filter(elem=>elem.title===e.target.innerHTML)
+            return(
+                <div>
+                    <input type='text' value={noteFound.title}/>
+                    <input type='text' value={noteFound.content}/>
+
+                </div>
+            )  
+        }
+        
     }
 
     const addDiv=()=>{
         return notes.map((e)=>{
             return(
-                <div>{e.title}</div>
+                <div className='note' onClick={showNote}>{e.title}</div>
             )
         })
+    }
+
+    const addNote=async()=>{
+
+        const res=await fetch(`${server}/api/users/14d97ab7-d59f-4b9f-a16b-29c2b3806694/notes`,
+        {
+            method:'POST',
+            headers:{
+                "Content-type":"application/json"
+            },body:JSON.stringify(newElem)
+        })
+        .then(console.log("note added into db"))
+        getNotes()
+    }
+
+    const newNote=(e)=>{
+
+        let titlu=document.getElementsByClassName('title')[0].value,
+            continut=document.getElementsByClassName('noteC')[0].value
+
+            newElem.title=titlu
+            newElem.content=continut
+            newElem.dateCreated='05/01/2023'
+
+
+            setElem(newElem)
+            addNote()
+            document.getElementsByClassName('title')[0].value=''
+            document.getElementsByClassName('noteC')[0].value=''
+
+    }
+
+    
+
+    const addEditableDiv=()=>{
+        return (
+            <div>
+                <input className='title' type="text" placeholder='Title..' />
+                <input className='noteC' type="text" placeholder='Lorem ipsum..'/>
+                <button onClick={newNote}>Save note</button>
+            </div>
+            
+        )
     }
 
     const handleChange=(e)=>{
@@ -41,9 +97,14 @@ function MainPage(){
         setState({query: e.target.value, list:results}) //every time the use types in the search bar, the state is updated
     }
 
+    const handleClick=(e)=>{
+    }
+
     const toAccount=()=>{
         navigate('/userPage')
     }
+
+    
 
     useEffect(()=>{
         getNotes()
@@ -53,7 +114,7 @@ function MainPage(){
         <div className="mainPage">
             <div className="div">
                 <ul>
-                    <li>Add note</li>
+                    <li><a onClick={handleClick}>Add note</a></li>
                     <li className='account'><a onClick={toAccount}>My account</a></li>
                 </ul>
             </div>
@@ -69,6 +130,7 @@ function MainPage(){
                         }))}
                     </th>
                     <th className='contentN'>
+                        {addEditableDiv()}
                     </th>
 
                 </tr>
