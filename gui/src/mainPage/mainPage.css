@@ -30,8 +30,13 @@ input{
     border-color:white;
 }
 
-ul{
-    
+.note{
+    border: 2px solid grey;
+}
+
+#uploadImg{
+    width: 100px;
+    height: 100px;
 }
 
 .account{

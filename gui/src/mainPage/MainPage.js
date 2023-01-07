@@ -8,8 +8,10 @@ const server="http://localhost:8080"
 function MainPage(){
     const[notes,setNotes]=useState([{}])
     const[state,setState]=useState({query:'',list:[]})
-    const[stateC,setStateC]=useState('') //state ul pentru click
+    const[stateC,setStateC]=useState('') //state ul pentru click buton
+    let[stateD,setStateD]=useState('') //state ul pentru click div
     const[newElem,setElem]=useState({})
+
     const navigate=useNavigate()
 
     const getNotes=async()=>{
@@ -19,25 +21,31 @@ function MainPage(){
         setNotes(data)
     }
 
+    const handleClickD=()=>{
+        stateD='click'
+        setStateD(stateD)
+    }
+
     const showNote=(e)=>{
-        if(e!=undefined){
-            setStateC('clicked')
-            let noteFound=notes.filter(elem=>elem.title===e.target.innerHTML)
+            let noteFound=notes.find(elem=>elem.title===e.target.innerHTML)
+            console.log(stateD)
             return(
                 <div>
+                    <button className='delete'>Delete</button>
                     <input type='text' value={noteFound.title}/>
                     <input type='text' value={noteFound.content}/>
-
+                    
+                    <button className='save'>Save</button>
                 </div>
-            )  
-        }
+            ) 
         
     }
 
     const addDiv=()=>{
         return notes.map((e)=>{
             return(
-                <div className='note' onClick={showNote}>{e.title}</div>
+                <div className='note' onClick={handleClickD}>{e.title}</div>
+                
             )
         })
     }
@@ -54,6 +62,19 @@ function MainPage(){
         .then(console.log("note added into db"))
         getNotes()
     }
+
+    // const editNote=async()=>{
+
+    //     const res=await fetch(`${server}/api/users/14d97ab7-d59f-4b9f-a16b-29c2b3806694/notes`,
+    //     {
+    //         method:'PUT',
+    //         headers:{
+    //             "Content-type":"application/json"
+    //         },body:JSON.stringify(newElem)
+    //     })
+    //     .then(console.log("note added into db"))
+    //     getNotes()
+    // }
 
     const newNote=(e)=>{
 
@@ -79,6 +100,8 @@ function MainPage(){
             <div>
                 <input className='title' type="text" placeholder='Title..' />
                 <input className='noteC' type="text" placeholder='Lorem ipsum..'/>
+                <input type='file' className='upload'/>
+                <img className='uploadImg' src={document.getElementsByClassName('upload')[0].value}/>
                 <button onClick={newNote}>Save note</button>
             </div>
             
@@ -98,17 +121,23 @@ function MainPage(){
     }
 
     const handleClick=(e)=>{
+        setStateC('clicked')
     }
 
     const toAccount=()=>{
         navigate('/userPage')
     }
 
-    
+    const addFolder=()=>{
+        
+    }
+
 
     useEffect(()=>{
         getNotes()
     },[])
+
+   
 
     return(
         <div className="mainPage">
@@ -121,7 +150,10 @@ function MainPage(){
 
             <table className="content">
                 <tr>
-                    <th className='groupN'>portiunea unde isi grupeaza notitele</th>
+                    <th className='groupN'>
+                        portiunea unde isi grupeaza notitele
+                        <button onClick={addFolder}> Add a folder</button>
+                    </th>
                     <th className='notes'>
                         {/* handle cazul in care utilizatorul cauta cv ce nu exista */}
                         <input type="text" placeholder="Search" onChange={handleChange}/>
@@ -130,7 +162,9 @@ function MainPage(){
                         }))}
                     </th>
                     <th className='contentN'>
-                        {addEditableDiv()}
+                        {/* alta idee sincer n am */}
+                        {stateC===''?" ": addEditableDiv()}
+                        {stateD===''?" ":showNote()}
                     </th>
 
                 </tr>
