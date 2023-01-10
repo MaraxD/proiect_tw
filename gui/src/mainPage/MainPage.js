@@ -100,8 +100,8 @@ function MainPage(){
             <div>
                 <input className='title' type="text" placeholder='Title..' />
                 <input className='noteC' type="text" placeholder='Lorem ipsum..'/>
-                <input type='file' className='upload'/>
-                <img className='uploadImg' src={document.getElementsByClassName('upload')[0].value}/>
+                {/* <input type='file' className='upload'/>
+                <img className='uploadImg' src={document.getElementsByClassName('upload')[0].value}/> */}
                 <button onClick={newNote}>Save note</button>
             </div>
             
@@ -152,7 +152,7 @@ function MainPage(){
                 <tr>
                     <th className='groupN'>
                         portiunea unde isi grupeaza notitele
-                        <button onClick={addFolder}> Add a folder</button>
+                        {/* <button onClick={addFolder}> Add a folder</button> */}
                     </th>
                     <th className='notes'>
                         {/* handle cazul in care utilizatorul cauta cv ce nu exista */}
@@ -163,8 +163,8 @@ function MainPage(){
                     </th>
                     <th className='contentN'>
                         {/* alta idee sincer n am */}
-                        {stateC===''?" ": addEditableDiv()}
-                        {stateD===''?" ":showNote()}
+                        {stateC===''?"":addEditableDiv()}
+                        {/* {stateD===''?" ":showNote()} */}
                     </th>
 
                 </tr>
