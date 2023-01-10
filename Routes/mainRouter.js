@@ -4,6 +4,7 @@ import { userRouter } from "./userRouter.js"
 
 import { User } from "../Models/user.js"
 import { Note } from "../Models/note.js"
+import { Folder } from "../Models/folder.js"
 
 const router=express.Router()
 
@@ -30,7 +31,13 @@ router.post("/data",async(req,res)=>{
                 registry[n.key]=note
                 //nu se insereaza notitele cum trebuie
                 user.addNote(n)
-            }        
+            }   
+            
+            for(let f of req.body){
+                const folder=await Folder.create(f)
+                registry[f.key]=folder
+                user.addFolder(f)
+            }
             await user.save()
         }
         res.status(204).json({"message":"data has been added to the DB"})
@@ -52,7 +59,8 @@ router.get("/data",async(req,res,next)=>{
                 phoneNr:u.phoneNr,
                 enrlYear:u.enrlYear,
                 finishYear:u.finishYear,
-                notes:[]
+                notes:[],
+                folders:[]
             }
             for(let n of await u.getNotes()){
                 user.notes.push({
@@ -60,6 +68,12 @@ router.get("/data",async(req,res,next)=>{
                     dateCreated:n.dateCreated,
                     title:n.title,
                     content:n.content
+                })
+            }
+
+            for(let f of await u.getFolders()){
+                user.folders.push({
+                    nameFolder:f.nameFolder
                 })
             }
             result.push(user)

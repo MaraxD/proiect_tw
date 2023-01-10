@@ -21,6 +21,25 @@
                 "content":"nuj man ceva scris, lorem ipsum"
             }
             
+        ],
+        "folders":[
+           {
+            "nameFolder":"folder 1",
+            "notes":[
+                {
+                    "key":"noteM3",
+                    "dateCreated":"20/12/2022",
+                    "title":"first memo in the folder",
+                    "content":"nuj man ceva scris, lorem ipsum"
+                },
+                {
+                    "key":"noteM4",
+                    "dateCreated":"20/12/2022",
+                    "title":"first memo",
+                    "content":"nuj man ceva scris, lorem ipsum"
+                } 
+            ]
+           }
         ]
 
     },
