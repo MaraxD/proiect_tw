@@ -150,12 +150,6 @@ function MainPage(){
                 </ul>
             </div>
 
-            {/*Adaugare butoane login & register*/}
-
-            <div className="container_login_register">
-                <Link to="/LoginPage"><button>Log in</button></Link>
-                <Link to="/RegisterPage"><button>Register</button></Link>
-            </div>
 
             <table className="content">
                 <tr>
