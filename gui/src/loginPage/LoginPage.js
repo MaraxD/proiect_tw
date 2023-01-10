@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import './loginPage.css'
 
 /*
@@ -8,34 +8,64 @@ const [currForm, setCurrentForm]=useState('login');
 in return intr un div ceva currForm === 'login'?<LoginPage/>:<RegisterPage/>
 */
 
+const server="http://localhost:8080"
 
 function LoginPage(){
 
     const[email, setEmail] = useState('');
-    const[pass, setPass] = useState('');
+    const[password, setPassword] = useState('');
+    const[users,setUsers]=useState([{}])
+    const navigate=useNavigate()
 
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-        console.log(email);
+    const getUsers=async()=>{
+        const res=await fetch(`${server}/api/data`)
+        const data=await res.json()
+        setUsers(data)
     }
 
-    
+   
 
+    const verifyData=()=>{
+        if(email.includes('@stud.ase.ro')){
+            for(let u of users){
+                if(u.email===email && u.password===password){
+                    navigate('/mainPage')
+                }else{
+                    console.log('datele nu au fost gasite in BD')
+                }
+            }   
+        }else{
+            console.log('mailul nu e de ase')
+        }
+        
+    }
+
+    useEffect(()=>[
+        getUsers()
+    ],[])
+
+ 
 
     return (
         <div className="auth-form">
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="email">email</label>
-            <input value={email} onChange={(e)=> setEmail(e.target.value)} type="email" placeholder="blahblah@stud.ase.ro" id="email" name="email"/>
-            <label for="password">password</label>
-            <input value={pass} onChange={(e)=> setPass(e.target.value)} type="password" placeholder="********" id="password" name="password"/>
-            <Link to="/mainPage"><button>Log in</button></Link>
-            {/* l am legat de pagina de home */}
-        </form>
-        
+                <div>
+                    <label htmlFor="email">email</label><br></br>
+                    <input value={email} onChange={(e)=> setEmail(e.target.value)} type="email" placeholder="blahblah@stud.ase.ro" className="email" name="email"/>
+                </div>
+                
+                <div>
+                    <label for="password">password</label><br></br>
+                    <input value={password} onChange={(e)=> setPassword(e.target.value)} type="password" placeholder="********" id="password" name="password"/>
+                </div>
+                
+                {/* <Link to="/mainPage"><button onClick={verifyData}>Log in</button></Link> */}
+
+                <button onClick={verifyData}>Log in</button>
+                {/* l am legat de pagina de home */}
+          
         </div>
 
-            )
+    )
     
 }
 export default LoginPage

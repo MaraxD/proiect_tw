@@ -20,6 +20,7 @@ function MainPage(){
         //again id ul nu trebuie sa fie hardcodat
         const res=await fetch(`${server}/api/users/14d97ab7-d59f-4b9f-a16b-29c2b3806694/notes`)
         const data=await res.json()
+        console.log(data)
         setNotes(data)
     }
 

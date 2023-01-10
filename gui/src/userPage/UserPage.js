@@ -56,7 +56,7 @@ function UserPage(props){
     }
 
     const goHome=()=>{
-        navigate("/")
+        navigate("/mainPage")
     }
 
     useEffect(()=>{
