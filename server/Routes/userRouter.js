@@ -1,6 +1,7 @@
 import express, { response } from "express"
 import { User } from "../Models/user.js"
 import { Note } from "../Models/note.js"
+import { Folder } from "../Models/folder.js"
 
 const userRouter=express.Router()
 
@@ -166,7 +167,220 @@ userRouter.delete("/:noteId/notes/:userId",async(req,res)=>{
 //                 var yyyy=date.getFullYear()
 //                 date=dd+'/'+mm+'/'+yyyy
 
-//filter the notes of a student (by title, by date created, etc)
 
+//http://localhost:8080/api/users/68c814e0-2e9b-466a-bed4-5c493a6ce11b/folders
+//get all the folders (pt afisare pe pagina)
+// userRouter.get("/:userId/folders",async(req,res)=>{
+//     try {
+//         const result=[]
+//         const user=await User.findByPk(req.params.userId)
+//         if(user){
+//             const folders=await user.getFolders()
+//             if(folders.length>0){
+//                 res.json(folders)
+//             }else{
+//                 res.status(204).json({"message":"this student doesn t have any folders"})
+//             }
+//         }else{
+//             res.status(404).json({"message":"couldnt find student with this id "})
+//         }
+//     } catch (error) {
+//         res.status(400).json({"message":"smth went wrong when getting the folders"})
+//     }
+// })
+
+userRouter.get("/:userId/folders",async(req,res)=>{
+    try {
+        const result=[]
+        const user=await User.findByPk(req.params.userId)
+        if(user){
+            const folders=await user.getFolders()
+            for(let f of folders){
+                const folder={
+                    id:f.id,
+                    nameFolder:f.nameFolder,
+                    notes:[]
+                }
+                for(let n of await f.getNotes()){
+                    folder.notes.push({
+                        key:n.id,
+                        datCreated:n.datCreated,
+                        title:n.title,
+                        content:n.content
+                    })
+                }
+                result.push(folder)
+            }
+
+        }
+        if(result.length>0){
+            res.json(result)
+        }else{
+            res.status(204).json({"message":"there are no folders in DB for this user"})
+        }
+    } catch (error) {
+        res.status(400).json({"message":"smth went wrong when getting the folders"})
+    }
+})
+
+
+//user creates a folder MERGE (si se vede si in http://localhost:8080/api/data)
+// userRouter.post("/:userId/folders",async(req,res)=>{
+//     try {
+//         const user=await User.findByPk(req.params.userId)
+//         if(user){
+//             const folder=await Folder.create(req.body)
+//             user.addFolder(folder)
+//             await user.save()
+//             res.status(201).location(folder.id).send()
+//         }else{
+//             res.status(404).json({"message":"could not find the user"})
+//         }
+//     } catch (error) {
+//         res.status(400).json({"message":"smth went wrong when creating a folder"})
+//     }
+// })
+
+
+userRouter.post("/:userId/folders",async(req,res)=>{
+    try {
+        const registry={}
+        const user=await User.findByPk(req.params.userId)
+        if(user){
+            const folder=await Folder.create(req.body)
+            user.addFolder(folder)
+            await user.save()
+            res.status(201).location(folder.id).send()
+        }else{
+            res.status(404).json({"message":"could not find the user"})
+        }
+    } catch (error) {
+        res.status(400).json({"message":"smth went wrong when creating a folder"})
+    }
+})
+
+//edit the name of the folder MERGE
+userRouter.put("/:idFolder/users/:userId",async(req,res)=>{
+    try {
+        const user=await User.findByPk(req.params.userId)
+        if(user){
+            const folder=await user.getFolders({where:{id:req.params.idFolder}})
+            const folderS=folder.shift()
+            if(folderS){
+                folderS.update(req.body)
+                return res.status(204).json({"message":"title of the folder updated with success"})
+            }else{
+                return res.status(404).json({"message":"folder with that id could not be found"})
+            }
+        }else{                    
+            return res.status(404).json({"message":"user with that id doesn t exist"})
+        }
+    } catch (error) {
+        return res.status(404).json({"message":"smth went wrong when updating the name of this folder"})
+    }
+})
+
+//delete the folder MERGE
+userRouter.delete("/:idFolder/users/:userId",async(req,res)=>{
+    try {
+        const user=await User.findByPk(req.params.userId)
+        if(user){
+            const folder=await user.getFolders({where:{id:req.params.idFolder}})
+            const folderS=folder.shift()
+            if(folderS){
+                folderS.destroy()
+                return res.status(204).json({"message":"folder deleted with success"})
+            }else{
+                return res.status(204).json({"message":"folder with that id could not be found"})
+            }
+        }else{                    
+            return res.status(404).json({"message":"user with that id doesn t exist"})
+        }
+    } catch (error) {
+        return res.status(404).json({"message":"smth went wrong when deleting the folder"})
+    }
+})
+
+
+//edit the content of a selected folder (add a note, delete a note, update a note)
+//add notes into a folder
+userRouter.post("/:idFolder/users/:userId",async(req,res)=>{
+    try {
+        const user=await User.findByPk(req.params.userId)
+        if(user){
+            const folder=await user.getFolders({where:{id:req.params.idFolder}})
+            if(folder){
+                //cerarea si inserarea notitelor
+                const note=await Note.create(req.body)
+                folder.addNote(note)
+                await folder.save()
+                return res.status(204).location(note.id).send()
+            }else{
+                return res.status(404).json({"message":"folder with that id could not be found"})
+            }
+        }else{
+            return res.status(404).json({"message":"user with that id could not be found"}) 
+        }
+    } catch (error) {
+        return res.status(404).json({"message":"smth went wrong when inserting a note in the folder"})
+
+    }
+})
+
+
+//edit
+userRouter.put("/:idFolder/users/:userId/notes/:noteId",async(req,res)=>{
+    try {
+        const user=await User.findByPk(req.params.userId)
+        if(user){
+            const folder=await user.getFolders({where:{id:req.params.idFolder}})
+            const folderS=folder.shift()
+            if(folderS){
+                const note=await folderS.getNotes({where:{id:req.params.noteId}})
+                const noteS=note.shift()
+                if(noteS){
+                    await noteS.update(req.body)
+                    return res.status(204).json({"message":"updated with success"})
+                }else{
+                    return res.status(404).json({"message":"note with that id doesn t exist"})
+                }
+            }else{
+                return res.status(404).json({"message":"folder with that id doesn t exist"})
+            }
+        }else{                    
+            return res.status(404).json({"message":"user with that id doesn t exist"})
+        }
+    } catch (error) {
+        return res.status(404).json({"message":"smth went wrong when updating the note inside this folder"})
+    }
+})
+
+
+//delete a note from a folder
+userRouter.delete("/:idFolder/users/:userId/notes/:noteId",async(req,res)=>{
+    try {
+        const user=await User.findByPk(req.params.userId)
+        if(user){
+            const folder=await user.getFolders({where:{id:req.params.idFolder}})
+            const folderS=folder.shift()
+            if(folderS){
+                const note=await folderS.getNotes({where:{id:req.params.noteId}})
+                const noteS=note.shift()
+                if(noteS){
+                    await noteS.destroy()
+                    return res.status(204).json({"message":"deleted with success"})
+                }else{
+                    return res.status(404).json({"message":"note with that id doesn t exist"})
+                }
+            }else{
+                return res.status(404).json({"message":"folder with that id doesn t exist"})
+            }
+        }else{                    
+            return res.status(404).json({"message":"user with that id doesn t exist"})
+        }
+    } catch (error) {
+        return res.status(404).json({"message":"smth went wrong when deleting the note inside this folder"})
+    }
+})
                 
 export {userRouter}

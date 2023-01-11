@@ -1,18 +1,18 @@
 import { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-//e nevoie de acesta pt elementul Link
-import { Link } from "react-router-dom";
 
 import './mainPage.css'
 
 const server="http://localhost:8080"
 
-function MainPage(){
+function MainPage(props){ //props.data
     const[notes,setNotes]=useState([{}])
     const[state,setState]=useState({query:'',list:[]})
     const[stateC,setStateC]=useState('') //state ul pentru click buton
+    const[stateN,setStateN]=useState('') //state ul pentru click buton
     let[stateD,setStateD]=useState('') //state ul pentru click div
     const[newElem,setElem]=useState({})
+    const[nameF, setNameF]=useState('Untitled')
 
     const navigate=useNavigate()
 
@@ -20,7 +20,19 @@ function MainPage(){
         //again id ul nu trebuie sa fie hardcodat
         const res=await fetch(`${server}/api/users/14d97ab7-d59f-4b9f-a16b-29c2b3806694/notes`)
         const data=await res.json()
+        console.log(data)
         setNotes(data)
+    }
+
+    const getMedia=async()=>{
+        const res=await fetch("https://photos.app.goo.gl/FCD8pK8hZEtESrs2A",
+        {
+            headers:{
+                'mode':'no-cors'
+            }
+        })
+        const data=await res.json()
+        console.log(data)
     }
 
     const handleClickD=()=>{
@@ -125,13 +137,25 @@ function MainPage(){
     const handleClick=(e)=>{
         setStateC('clicked')
     }
+    
+    const handleClickN=(e)=>{
+        setStateN('clicked')
+    }
 
     const toAccount=()=>{
         navigate('/userPage')
     }
 
+    const editName=event=>{
+        setNameF(event.target.value)
+    }
+
     const addFolder=()=>{
-        
+        return(
+            <div className='newFolder'>
+                <input className='nameFolder' type="text" value={nameF} onChange={editName}/>
+            </div>
+        )
     }
 
 
@@ -142,7 +166,9 @@ function MainPage(){
    
 
     return(
+        
         <div className="mainPage">
+            {getMedia()}
             <div className="div">
                 <ul>
                     <li><a onClick={handleClick}>Add note</a></li>
@@ -150,18 +176,13 @@ function MainPage(){
                 </ul>
             </div>
 
-            {/*Adaugare butoane login & register*/}
-
-            <div className="container_login_register">
-                <Link to="/LoginPage"><button>Log in</button></Link>
-                <Link to="/RegisterPage"><button>Register</button></Link>
-            </div>
 
             <table className="content">
                 <tr>
                     <th className='groupN'>
                         portiunea unde isi grupeaza notitele
-                        {/* <button onClick={addFolder}> Add a folder</button> */}
+                        <button onClick={handleClickN}> Add a folder</button>
+                        {stateN===''?"":addFolder()}
                     </th>
                     <th className='notes'>
                         {/* handle cazul in care utilizatorul cauta cv ce nu exista */}
