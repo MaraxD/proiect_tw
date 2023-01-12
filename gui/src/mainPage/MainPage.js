@@ -24,16 +24,17 @@ function MainPage(props){ //props.data
         setNotes(data)
     }
 
-    const getMedia=async()=>{
-        const res=await fetch("https://photos.app.goo.gl/FCD8pK8hZEtESrs2A",
-        {
-            headers:{
-                'mode':'no-cors'
-            }
-        })
-        const data=await res.json()
-        console.log(data)
-    }
+    //pentru luarea materialelor media  
+    // const getMedia=async()=>{
+    //     const res=await fetch("https://photos.app.goo.gl/FCD8pK8hZEtESrs2A",
+    //     {
+    //         headers:{
+    //             'mode':'no-cors'
+    //         }
+    //     })
+    //     const data=await res.json()
+    //     console.log(data)
+    // }
 
     const handleClickD=()=>{
         stateD='click'
@@ -168,7 +169,6 @@ function MainPage(props){ //props.data
     return(
         
         <div className="mainPage">
-            {getMedia()}
             <div className="div">
                 <ul>
                     <li><a onClick={handleClick}>Add note</a></li>

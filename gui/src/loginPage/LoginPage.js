@@ -40,11 +40,10 @@ function LoginPage(){
         
     }
 
-    useEffect(()=>[
+    useEffect(()=>{
         getUsers()
-    ],[])
+    })
 
- 
 
     return (
         <div className="auth-form">
