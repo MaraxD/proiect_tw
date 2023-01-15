@@ -6,7 +6,7 @@ import image from './user.jpg'
 const server="http://localhost:8080"
 
 
-function UserPage(props){
+function UserPage(){
     const[user,setUser]=useState([{}])
     const[name,setName]=useState("")
     const[lastName,setLName]=useState("")
@@ -56,7 +56,7 @@ function UserPage(props){
     }
 
     const goHome=()=>{
-        navigate("/mainPage/pipi")
+        navigate("/mainPage")
     }
 
     useEffect(()=>{

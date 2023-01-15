@@ -1,4 +1,4 @@
-th{
+/* th{
     width: inherit;
     border: 2px solid grey;
     height: 100%;
@@ -45,5 +45,251 @@ input{
 
 div{
     cursor: pointer;
+} */
+
+
+
+body{
+    outline: none;
+    border: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    height: 100%;
+    width: 100%;
+    background: #dddddd;
+}
+
+.container{
+    display: flex;
+}
+nav{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    left: 0;
+    background: #a9c8ed;
+    width: 200px;
+    overflow: hidden;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+}
+.logo{
+    text-align: center;
+    display: flex;
+    margin: 10px 0 0 10px;
+}
+.logo img{
+    width: 60px;
+    height: 45px;
+    border-radius: 50%;
+ }
+.logo span{
+    font-weight: bold;
+    padding-left: 15px;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+nav .menu-item{
+    position: relative;
+    color: black;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+    padding: 5px;
+    cursor: pointer;
+    
+}
+nav .glyphicon{
+    position: relative;
+    width: 50px;
+    height: 40px;
+    top: 14px;
+    font-size: 20px;
+    text-align: center;
+}
+
+nav .edit-item{
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    color: black;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+    padding: 5px;
+}
+
+nav .add-item{
+    position: absolute;
+    bottom: 8px;
+    left: 110px;
+    color: black;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+    padding: 5px;
+}
+
+.search{
+    display: flex;
+
+}
+
+nav1{
+    position: relative;
+    top: 0;
+    margin-left: 200px;
+    bottom: 0;
+    height: 100vh;
+    background: #c9daef;
+    width: 250px;
+    overflow: hidden;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+}
+.search input[type=text]{
+    position: relative;
+    padding: 6px;
+    margin-left: 5px;
+    top: 2px;
+    border: black;
+    text-align: left;
+    font-size: 15px;
+    width: 240px;
+    height: 50px; 
+}
+
+.note{
+    position: relative;
+    padding: 6px;
+    margin-left: 2px;
+    top: 10px;
+    border: 1px rgb(203, 196, 196);
+    text-align: left;
+    font-size: 13px;
+    width: 246px;
+    height: 75px;
+    cursor: pointer;
+}
+
+.search input[type=notes1]{
+    position: relative;
+    padding: 6px;
+    margin-left: 2px;
+    top: 10px;
+    border: 1px rgb(203, 196, 196);
+    text-align: left;
+    font-size: 13px;
+    width: 246px;
+    height: 75px;
+}
+.search input[type=notes2]{
+    position: relative;
+    padding: 6px;
+    margin-left: 2px;
+    top: 15px;
+    border: 1px rgb(203, 196, 196);
+    text-align: left;
+    font-size: 13px;
+    width: 246px;
+    height: 75px;
+}
+.search input[type=notes3]{
+    position: relative;
+    padding: 6px;
+    margin-left: 2px;
+    top: 20px;
+    border: 1px rgb(203, 196, 196);
+    text-align: left;
+    font-size: 13px;
+    width: 246px;
+    height: 75px;
+}
+.write{
+ display: flex;
+}
+nav2{
+    position: absolute;
+    top: 50px;
+    margin-left: 460px;
+    bottom: 0;
+    height: 91vh;
+    background: #ffffff;
+    width: 68.5%;
+    overflow: hidden;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+}
+nav2 textarea{
+    position: absolute;
+    top: 5px;
+    margin-left: 5px;
+    bottom: 0;
+    height: 91vh;
+    padding: 12px 20px;
+    font-size: 16px;
+    resize: none;
+    box-sizing: border-box;
+    background: #ffffff;
+    width: 100%;
+}
+.buttons{
+    display: flex;
+    cursor: pointer;;
+}
+nav3{
+    position: absolute;
+    top: 1px;
+    margin-left: 460px;
+    bottom: 0;
+}
+nav3 .glyphicon{
+    position: relative;
+    width: 50px;
+    height: 40px;
+    top: 14px;
+    font-size: 20px;
+    text-align: center;
+}
+nav3 .trash{
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: black;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+    padding: 5px;
+}
+nav3 .save{
+    position: absolute;
+    top: 0;
+    margin-left: 50px;
+    color: black;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+    padding: 5px;
+}
+nav3 .share{
+    position: absolute;
+    top: 0;
+    left: 900px;
+    margin-right: 10px;
+    color: black;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+    padding: 5px;
+}
+nav3 .plus{
+    position: absolute;
+    top: 0;
+    left: 950px;
+    margin-right: 10px;
+    color: black;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+    padding: 5px;
 }
 

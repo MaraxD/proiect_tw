@@ -1,28 +1,38 @@
 import { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs"
+import { FaUserCircle } from "react-icons/fa"
+import { AiOutlineFile, AiFillFolderOpen, AiFillPlusCircle } from "react-icons/ai"
+import {CiSaveDown2 } from "react-icons/ci"
+import {FiShare } from "react-icons/fi"
 
 import './mainPage.css'
 
 const server="http://localhost:8080"
 
-function MainPage(props){ //props.data
+function MainPage(){ //props.data
     const[notes,setNotes]=useState([{}])
+    const[folders,setFolders]=useState([{}]) //trebuie sa vad ce returneaza
+
     const[state,setState]=useState({query:'',list:[]})
     const[stateC,setStateC]=useState('') //state ul pentru click buton
     const[stateN,setStateN]=useState('') //state ul pentru click buton
+    const[stateF,setStateF]=useState('') //state ul pentru click buton
     let[stateD,setStateD]=useState('') //state ul pentru click div
+
     const[newElem,setElem]=useState({})
     const[nameF, setNameF]=useState('Untitled')
 
     const navigate=useNavigate()
 
+    //OPERATIILE PENTRU NOTES
     const getNotes=async()=>{
         //again id ul nu trebuie sa fie hardcodat
         const res=await fetch(`${server}/api/users/14d97ab7-d59f-4b9f-a16b-29c2b3806694/notes`)
         const data=await res.json()
-        console.log(data)
         setNotes(data)
     }
+
 
     //pentru luarea materialelor media  
     // const getMedia=async()=>{
@@ -41,41 +51,34 @@ function MainPage(props){ //props.data
         setStateD(stateD)
     }
 
-    const showNote=(e)=>{
+    const showSelectedNote=(e)=>{
             let noteFound=notes.find(elem=>elem.title===e.target.innerHTML)
             console.log(stateD)
             return(
                 <div>
-                    <button className='delete'>Delete</button>
+                    {/* <button className='delete'>Delete</button> */}
                     <input type='text' value={noteFound.title}/>
                     <input type='text' value={noteFound.content}/>
-                    
-                    <button className='save'>Save</button>
+                    {/* <button className='save'>Save</button> */}
                 </div>
             ) 
         
     }
 
+    //pentru afisarea notitelor din BD
     const addDiv=()=>{
-        return notes.map((e)=>{
+        if(notes===null){
             return(
-                <div className='note' onClick={handleClickD}>{e.title}</div>
-                
+                <div className='note'>No notes to show here </div>
             )
-        })
-    }
-
-    const addNote=async()=>{
-
-        const res=await fetch(`${server}/api/users/14d97ab7-d59f-4b9f-a16b-29c2b3806694/notes`,
-        {
-            method:'POST',
-            headers:{
-                "Content-type":"application/json"
-            },body:JSON.stringify(newElem)
-        })
-        .then(console.log("note added into db"))
-        getNotes()
+        }else{
+            return notes.map((e)=>{
+                return(
+                    <div className='note' onClick={handleClickD}>{e.title}</div>
+                )
+            })
+        }
+        
     }
 
     // const editNote=async()=>{
@@ -91,6 +94,23 @@ function MainPage(props){ //props.data
     //     getNotes()
     // }
 
+
+    //adds a note to db
+    const addNote=async()=>{
+
+        const res=await fetch(`${server}/api/users/14d97ab7-d59f-4b9f-a16b-29c2b3806694/notes`,
+        {
+            method:'POST',
+            headers:{
+                "Content-type":"application/json"
+            },body:JSON.stringify(newElem)
+        })
+        .then(console.log("note added into db"))
+        getNotes()
+    }
+
+
+    //created a note before inserting into the db
     const newNote=(e)=>{
 
         let titlu=document.getElementsByClassName('title')[0].value,
@@ -109,7 +129,7 @@ function MainPage(props){ //props.data
     }
 
     
-
+    //adds the inputs when the user want to create a new note
     const addEditableDiv=()=>{
         return (
             <div>
@@ -123,6 +143,7 @@ function MainPage(props){ //props.data
         )
     }
 
+    //handleChange for the searchbar
     const handleChange=(e)=>{
         const results=notes.filter(note=>{
             if(e.target.value===""){
@@ -132,7 +153,7 @@ function MainPage(props){ //props.data
             }    
         })
         
-        setState({query: e.target.value, list:results}) //every time the use types in the search bar, the state is updated
+        setState({query: e.target.value, list:results}) //every time the user types in the search bar, the state is updated
     }
 
     const handleClick=(e)=>{
@@ -143,6 +164,10 @@ function MainPage(props){ //props.data
         setStateN('clicked')
     }
 
+    const handleClickF=(e)=>{
+        setStateF('clicked')
+    }
+
     const toAccount=()=>{
         navigate('/userPage')
     }
@@ -151,10 +176,23 @@ function MainPage(props){ //props.data
         setNameF(event.target.value)
     }
 
+    const openFolder=()=>{
+
+    }
+
+    //OPERATIILE PENTRU FOLDERS
+    //trebuie testat
+    const getFolders=async()=>{
+        const res=await fetch(`${server}/api/users/14d97ab7-d59f-4b9f-a16b-29c2b3806694/folders`)
+        const data=await res.json()
+        setFolders(data)
+    }
+
     const addFolder=()=>{
         return(
             <div className='newFolder'>
-                <input className='nameFolder' type="text" value={nameF} onChange={editName}/>
+                <li class="menu-item" onClick={openFolder}><AiFillFolderOpen/> New Untitled Folder</li>
+                {/* <input className='nameFolder' type="text" value={nameF} onChange={editName}/> */}
             </div>
         )
     }
@@ -167,44 +205,57 @@ function MainPage(props){ //props.data
    
 
     return(
-        
         <div className="mainPage">
-            <div className="div">
+            <div className="container">
+            <nav>
                 <ul>
-                    <li><a onClick={handleClick}>Add note</a></li>
-                    <li className='account'><a onClick={toAccount}>My account</a></li>
+                    <li><a href="#" class="logo"><img src="logo.jpg" alt=""/><span class="nav-item">Ase Notes</span></a></li>
+                    <li class="menu-item" onClick={toAccount}><FaUserCircle/> Cont Personal</li>
+                    <li class="menu-item" onClick={handleClick}><AiOutlineFile/>Notes</li>
+                    <li class="menu-item"><AiFillFolderOpen/> Folder</li>
+                    <li class="edit-item"><BsFillPencilFill/> Edit</li>
+                    <li class="add-item" onClick={handleClickF}><AiFillPlusCircle/> Add Folder</li>
+                    {stateF===''?"":addFolder()}
                 </ul>
+            </nav>
             </div>
 
-
-            <table className="content">
-                <tr>
-                    <th className='groupN'>
-                        portiunea unde isi grupeaza notitele
-                        <button onClick={handleClickN}> Add a folder</button>
-                        {stateN===''?"":addFolder()}
-                    </th>
-                    <th className='notes'>
-                        {/* handle cazul in care utilizatorul cauta cv ce nu exista */}
-                        <input type="text" placeholder="Search" onChange={handleChange}/>
-                        {(state.query===''?addDiv():state.list.map(note=>{
+            <div className="search">
+                <nav1>
+                    <ul>
+                        <input type="text" placeholder="Search.." onChange={handleChange}/>                         
+                        {state.query===''?addDiv():state.list.map(note=>{
                             return <div>{note.title}</div>
-                        }))}
-                    </th>
-                    <th className='contentN'>
-                        {/* alta idee sincer n am */}
-                        {stateC===''?"":addEditableDiv()}
-                        {/* {stateD===''?" ":showNote()} */}
-                    </th>
+                        })}
+                            
 
-                </tr>
-            </table>
-            
+                        {/* <input type="notes1" placeholder="Notes 1"/>           
+                        <input type="notes2" placeholder="Notes 2"/>   
+                        <input type="notes3" placeholder="Notes 3"/>  */}
+                    </ul>
+                </nav1>     
+            </div>
+
+            <div class="write">
+                <nav2>
+                    <ul>
+                        {stateN===''?"":addEditableDiv()}
+                        
+                    </ul>
+                </nav2>
+            </div>
+            <div class="buttons">
+                <nav3>
+                    <ul>
+                        <li class="trash"><BsFillTrashFill/></li>
+                        <li class="save"><CiSaveDown2/></li>
+                        <li class="share"><FiShare/></li>
+                        <li class="plus" onClick={handleClickN}><AiFillPlusCircle/></li>
+                    </ul>
+                </nav3>
+            </div>
         </div>
     )
-
-
-
 }
 
 export default MainPage

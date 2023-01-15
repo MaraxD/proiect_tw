@@ -21,6 +21,25 @@
                 "content":"nuj man ceva scris, lorem ipsum"
             }
             
+        ],
+        "folders":[
+           {
+            "nameFolder":"folder 1",
+            "notes":[
+                {
+                    "key":"noteM3",
+                    "dateCreated":"20/12/2022",
+                    "title":"first memo in the folder",
+                    "content":"nuj man ceva scris, lorem ipsum"
+                },
+                {
+                    "key":"noteM4",
+                    "dateCreated":"20/12/2022",
+                    "title":"first memo",
+                    "content":"nuj man ceva scris, lorem ipsum"
+                } 
+            ]
+           }
         ]
 
     },
@@ -29,7 +48,7 @@
         "lastName":"Laria",
         "email":"pavellarisa20@stud.ase.ro",
         "password":"5678",
-        "phoneNr":"0722620120",
+        "phoneNr":"0733535272",
         "enrlYear":2020,
         "finishYear":2023,
         "notes":[
@@ -47,7 +66,7 @@
         "lastName":"Adrian",
         "email":"pascaleadrian20@stud.ase.ro",
         "password":"9101",
-        "phoneNr":"0722620120",
+        "phoneNr":"0799850590",
         "enrlYear":2020,
         "finishYear":2023,
         "notes":[
@@ -63,13 +82,13 @@
         "firstName":"Ivan",
         "lastName":"Maria",
         "email":"ivanmaria20@stud.ase.ro",
-        "password":"9101",
-        "phoneNr":"0722620120",
+        "password":"4200",
+        "phoneNr":"0769702635",
         "enrlYear":2020,
         "finishYear":2023,
         "notes":[
             {
-                "key":"noteA1",
+                "key":"noteI1",
                 "dateCreated":"20/12/2022",
                 "title":"first memo",
                 "content":"nuj man ceva scris, lorem ipsum"

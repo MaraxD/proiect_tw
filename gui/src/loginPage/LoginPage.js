@@ -2,11 +2,6 @@ import React, {useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './loginPage.css'
 
-/*
-in app.js putem sa ne folosim de use state
-const [currForm, setCurrentForm]=useState('login');
-in return intr un div ceva currForm === 'login'?<LoginPage/>:<RegisterPage/>
-*/
 
 const server="http://localhost:8080"
 
@@ -29,7 +24,7 @@ function LoginPage(){
         if(email.includes('@stud.ase.ro')){
             for(let u of users){
                 if(u.email===email && u.password===password){
-                    navigate('/mainPage/hello')
+                    navigate('/mainPage')
                 }else{
                     console.log('datele nu au fost gasite in BD')
                 }
@@ -42,7 +37,7 @@ function LoginPage(){
 
     useEffect(()=>{
         getUsers()
-    })
+    },[])
 
 
     return (

@@ -10,7 +10,7 @@ const App=()=> {
           <Routes>
             <Route path="/" element={<LoginPage/>}></Route>
             <Route path='/userPage' element={<UserPage/>}></Route>
-            <Route path='/mainPage/:value' element={<MainPage/>}></Route>
+            <Route path='/mainPage' element={<MainPage/>}></Route>
           </Routes>
     </div>
   );
