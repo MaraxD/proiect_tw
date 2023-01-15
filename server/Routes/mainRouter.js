@@ -28,7 +28,6 @@ router.post("/data",async(req,res)=>{
             for(let n of u.notes){
                 const note=await Note.create(n)
                 registry[n.key]=note
-                //nu se insereaza notitele cum trebuie
                 user.addNote(note)
             }   
             
@@ -77,9 +76,20 @@ router.get("/data",async(req,res,next)=>{
             }
 
             for(let f of await u.getFolders()){
-                user.folders.push({
-                    nameFolder:f.nameFolder
-                })
+                const folder={
+                    key:f.id,
+                    nameFolder:f.nameFolder,
+                    notes:[]
+                }
+                for(let n2 of await f.getNotes()){
+                    folder.notes.push({
+                        key:n2.id,
+                        dateCreated:n2.dateCreated,
+                        title:n2.title,
+                        content:n2.content
+                    })
+                }
+                user.folders.push(folder)
             }
             result.push(user)
         }

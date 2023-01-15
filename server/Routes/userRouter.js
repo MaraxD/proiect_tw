@@ -170,58 +170,60 @@ userRouter.delete("/:noteId/notes/:userId",async(req,res)=>{
 
 //http://localhost:8080/api/users/68c814e0-2e9b-466a-bed4-5c493a6ce11b/folders
 // get all the folders (pt afisare pe pagina)
-userRouter.get("/:userId/folders",async(req,res)=>{
-    try {
-        const result=[]
-        const user=await User.findByPk(req.params.userId)
-        if(user){
-            const folders=await user.getFolders()
-            if(folders.length>0){
-                res.json(folders)
-            }else{
-                res.status(204).json({"message":"this student doesn t have any folders"})
-            }
-        }else{
-            res.status(404).json({"message":"couldnt find student with this id "})
-        }
-    } catch (error) {
-        res.status(400).json({"message":"smth went wrong when getting the folders"})
-    }
-})
-
 // userRouter.get("/:userId/folders",async(req,res)=>{
 //     try {
 //         const result=[]
 //         const user=await User.findByPk(req.params.userId)
 //         if(user){
 //             const folders=await user.getFolders()
-//             for(let f of folders){
-//                 const folder={
-//                     id:f.id,
-//                     nameFolder:f.nameFolder,
-//                     notes:[]
-//                 }
-//                 for(let n of await f.getNotes()){
-//                     folder.notes.push({
-//                         key:n.id,
-//                         datCreated:n.datCreated,
-//                         title:n.title,
-//                         content:n.content
-//                     })
-//                 }
-//                 result.push(folder)
+//             if(folders.length>0){
+//                 res.json(folders)
+//             }else{
+//                 res.status(204).json({"message":"this student doesn t have any folders"})
 //             }
-
-//         }
-//         if(result.length>0){
-//             res.json(result)
 //         }else{
-//             res.status(204).json({"message":"there are no folders in DB for this user"})
+//             res.status(404).json({"message":"couldnt find student with this id "})
 //         }
 //     } catch (error) {
 //         res.status(400).json({"message":"smth went wrong when getting the folders"})
 //     }
 // })
+
+userRouter.get("/:userId/folders",async(req,res)=>{
+    try {
+        const result=[]
+        const user=await User.findByPk(req.params.userId)
+        if(user){
+            const folders=await user.getFolders()
+            for(let f of folders){
+                const folder={
+                    id:f.id,
+                    nameFolder:f.nameFolder,
+                    notes:[]
+                }
+                for(let n of await f.getNotes()){
+                    folder.notes.push({
+                        key:n.id,
+                        datCreated:n.datCreated,
+                        title:n.title,
+                        content:n.content
+                    })
+                }
+                result.push(folder)
+            }
+
+        }else{
+            res.status(404).json({"message":"there s no user with that id"})
+        }
+        if(result.length>0){
+            res.json(result)
+        }else{
+            res.status(204).json({"message":"there are no folders in DB for this user"})
+        }
+    } catch (error) {
+        res.status(400).json({"message":"smth went wrong when getting the folders"})
+    }
+})
 
 
 //user creates a folder MERGE (si se vede si in http://localhost:8080/api/data)

@@ -28,7 +28,7 @@ function MainPage(){ //props.data
     //OPERATIILE PENTRU NOTES
     const getNotes=async()=>{
         //again id ul nu trebuie sa fie hardcodat
-        const res=await fetch(`${server}/api/users/14d97ab7-d59f-4b9f-a16b-29c2b3806694/notes`)
+        const res=await fetch(`${server}/api/users/274f383e-97e1-4ae1-90f3-07818592c98b/notes`)
         const data=await res.json()
         setNotes(data)
     }
