@@ -54,31 +54,32 @@ function LoginPage(){
                 
                <button onClick={verifyData}>Log in</button> */}
 
-<div class="box">
-    <div class="container">
-        <div class="top">
-            <span>ASE Notes</span>
-            <header>Login</header>
-        </div>
-        <div class="input-field">
-            <input type="text" class="input" placeholder="Username" id=""/>
-            <i class='bx bx-user' ></i>
-        </div>
-        <div class="input-field">
-            <input type="Password" class="input" placeholder="Password" id=""/>
-            <i class='bx bx-lock-alt'></i>
-        </div>
-        <div class="input-field">
-            <input type="submit" class="submit" value="Login" id=""/>
-        </div>
-        <div class="two-col">
-            <div class="one">
-               <input type="checkbox" name="" id="check"/>
-               <label for="check"> Remember Me</label>
-            </div>
-        </div>
-    </div>
-</div>    
+                <div class="box">
+                    <div class="container">
+                        <div class="top">
+                            <span>ASE Notes</span>
+                            <header>Login</header>
+                        </div>
+                        <div class="input-field">
+                            <input type="text" class="input" placeholder="Username" id="" value={email} onChange={(e)=> setEmail(e.target.value)}/>
+                            <i class='bx bx-user' ></i> 
+                            {/* astea trebuia sa fie iconite? */}
+                        </div>
+                        <div class="input-field">
+                            <input type="Password" class="input" placeholder="Password" id="" value={password} onChange={(e)=> setPassword(e.target.value)}/>
+                            <i class='bx bx-lock-alt'></i>
+                        </div>
+                        <div class="input-field">
+                            <input type="submit" class="submit" value="Login" id="" onClick={verifyData}/>
+                        </div>
+                        <div class="two-col">
+                            <div class="one">
+                            <input type="checkbox" name="" id="check"/>
+                            <label for="check"> Remember Me</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
           
         </div>
 

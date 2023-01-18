@@ -185,7 +185,7 @@ userRouter.get("/:userId/folders",async(req,res)=>{
                 for(let n of await f.getNotes()){
                     folder.notes.push({
                         key:n.id,
-                        datCreated:n.dateCreated,
+                        dateCreated:n.dateCreated,
                         title:n.title,
                         content:n.content
                     })
@@ -206,25 +206,7 @@ userRouter.get("/:userId/folders",async(req,res)=>{
     }
 })
 
-
-//user creates a folder MERGE (si se vede si in http://localhost:8080/api/data)
-// userRouter.post("/:userId/folders",async(req,res)=>{
-//     try {
-//         const user=await User.findByPk(req.params.userId)
-//         if(user){
-//             const folder=await Folder.create(req.body)
-//             user.addFolder(folder)
-//             await user.save()
-//             res.status(201).location(folder.id).send()
-//         }else{
-//             res.status(404).json({"message":"could not find the user"})
-//         }
-//     } catch (error) {
-//         res.status(400).json({"message":"smth went wrong when creating a folder"})
-//     }
-// })
-
-
+//add a folder
 userRouter.post("/:userId/folders",async(req,res)=>{
     try {
         const user=await User.findByPk(req.params.userId)

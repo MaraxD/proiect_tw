@@ -90,6 +90,11 @@ nav{
     font-size: 18px;
     text-transform: uppercase;
 }
+
+li{
+    display: inline;
+}
+
 nav .menu-item{
     position: relative;
     color: black;

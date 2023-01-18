@@ -9,6 +9,7 @@ import {FiShare } from "react-icons/fi"
 import './mainPage.css'
 
 const server="http://localhost:8080"
+const user="9c9722a8-82c9-47ca-83d8-2bc445a945a3"
 
 function MainPage(){ //props.data
     const[notes,setNotes]=useState([{}])
@@ -17,13 +18,17 @@ function MainPage(){ //props.data
     const[state,setState]=useState({query:'',list:[]})
     const[stateC,setStateC]=useState('') //state ul pentru click buton
     const[stateN,setStateN]=useState('') //state ul pentru notita
+    const[stateNS,setStateNS]=useState([{}]) //state ul pentru notitele din folder
+
     const[stateF,setStateF]=useState('') //state ul pentru folder
     const[stateD,setStateD]=useState('') //state ul pentru click div
     const[load,setLoad]=useState('') //state ul pentru preluare imagini and stuff
 
 
     const[newElem,setElem]=useState({})
-    const[nameF, setNameF]=useState('Untitled')
+    const[newF,setNewF]=useState({})
+    const[exitF,setExitF]=useState('')
+    const[nameF, setNameF]=useState('Untitled folder')
     //din nou, nu stiu daca e chiar facut asa sau se putea mai usor
     const[nameN, setNameN]=useState('')
     const[contentN, setContentN]=useState('')
@@ -37,13 +42,9 @@ function MainPage(){ //props.data
     //OPERATIILE PENTRU NOTES
     const getNotes=async()=>{
         //again id ul nu trebuie sa fie hardcodat
-        const res=await fetch(`${server}/api/users/da067d2c-6306-4bce-b93a-bfb3ef831fb1/notes`)
+        const res=await fetch(`${server}/api/users/${user}/notes`)
         const data=await res.json()
         setNotes(data)
-
-        const res2=await fetch(`${server}/api/users/da067d2c-6306-4bce-b93a-bfb3ef831fb1/folders`)
-        const data2=await res2.json()
-        setFolders(data2)
     }
 
 
@@ -92,7 +93,7 @@ function MainPage(){ //props.data
     }
 
     const updateNoteDB=async(updatedElem)=>{
-        const res=await fetch(`${server}/api/users/${idN}/notes/da067d2c-6306-4bce-b93a-bfb3ef831fb1`,
+        const res=await fetch(`${server}/api/users/${idN}/notes/${user}`,
         {
             method:'PUT',
             headers:{
@@ -116,9 +117,9 @@ function MainPage(){ //props.data
 
     //pentru afisarea notitelor din BD
     const addDiv=()=>{
-        if(notes===null){
+        if(notes.length===null){
             return(
-                <div className='note'>No notes to show here </div>
+                <div className='note'>The user doesn't have any notes </div>
             )
         }else{
             return notes.map((e)=>{
@@ -130,23 +131,9 @@ function MainPage(){ //props.data
         
     }
 
-    // const editNote=async()=>{
-
-    //     const res=await fetch(`${server}/api/users/14d97ab7-d59f-4b9f-a16b-29c2b3806694/notes`,
-    //     {
-    //         method:'PUT',
-    //         headers:{
-    //             "Content-type":"application/json"
-    //         },body:JSON.stringify(newElem)
-    //     })
-    //     .then(console.log("note added into db"))
-    //     getNotes()
-    // }
-
-
     //adds a note to db
     const addNote=async()=>{
-        const res=await fetch(`${server}/api/users/da067d2c-6306-4bce-b93a-bfb3ef831fb1/notes`,
+        const res=await fetch(`${server}/api/users/${user}/notes`,
         {
             method:'POST',
             headers:{
@@ -204,7 +191,7 @@ function MainPage(){ //props.data
     }
 
     const deleteNoteDB=async(idN)=>{
-        const res=await fetch(`${server}/api/users/${idN}/notes/da067d2c-6306-4bce-b93a-bfb3ef831fb1`,
+        const res=await fetch(`${server}/api/users/${idN}/notes/${user}`,
         {
             method:'DELETE'
         })
@@ -233,74 +220,159 @@ function MainPage(){ //props.data
         setStateN('clicked')
     }
 
-    const handleClickF=(e)=>{
-        setStateF('clicked')
-    }
-
     const toAccount=()=>{
         navigate('/userPage')
     }
 
-    const editName=event=>{
-        setNameF(event.target.value)
-    }
-
-    const openFolder=()=>{
-
-    }
+   
 
     //OPERATIILE PENTRU FOLDERS
     //trebuie testat
     const getFolders=async()=>{
-        const res=await fetch(`${server}/api/users/da067d2c-6306-4bce-b93a-bfb3ef831fb1/folders`)
+        const res=await fetch(`${server}/api/users/${user}/folders`)
         const data=await res.json()
+        console.log(data)
         setFolders(data)
     }
 
-    //TODO: de rezolvat aici
-    const showFolders=async()=>{
-        return(
-            folders.map((e)=>{
-                <div class="folder-item"><AiFillFolderOpen/>{ e.nameFolder}</div>
+    
+    const showFolders=()=>{
+            return folders.map((e)=>{
+                return(
+                    <div>
+                        <li class="menu-item"><AiFillFolderOpen/>
+                            <li onClick={openFolder}>{e.nameFolder}</li>
+                        
+                        </li>
+                        {stateF==='opened'? showDBtn():""}
+                    </div>
+                    
+                )
             })
+    }
+
+    //selected note FROM the folder
+    const getSelectedNoteF=(e)=>{
+        setStateD('clickN')
+        let noteFound=notes.find(elem=>elem.title===e.target.innerHTML)
+        setNameN(noteFound.title)
+        setContentN(noteFound.content)
+        setIdN(noteFound.id)
+
+    }
+
+    const addDivF=()=>{
+        if(stateNS.length===0){
+            return(
+                <div className='note'>There are no notes in this folder </div>
+            )
+        }else{
+            return stateNS.map((e)=>{
+                return(
+                    <div className='note' onClick={getSelectedNoteF}>{e.title}</div>
+                )
+            })
+        }
+        
+    }
+
+
+    const deleteFolder=()=>{
+       
+        folders.map((e)=>{
+            if(e.nameFolder===nameF){ 
+                deleteFolderDB(e.id)
+                const index=folders.indexOf(e)
+                folders.splice(index,1)
+            }
+        })
+        setStateF('')
+    }
+
+    const deleteFolderDB=async(idF)=>{
+        const res=await fetch(`${server}/api/users/${idF}/users/${user}`,
+        {
+            method:'DELETE'
+        })
+        .then(console.log("folder deleted from db"))
+        getNotes()
+    }
+    
+    const showDBtn=()=>{
+        return(
+            <li class="edit-item" onClick={deleteFolder}><BsFillPencilFill/> Delete {nameF}</li>
         )
+    }
+
+    const openFolder=(e)=>{
+        console.log(e.target.innerHTML)
+        setNameF(e.target.innerHTML)
+        setStateF('opened')
+        let folderFound=folders.find(folder=>folder.nameFolder===e.target.innerHTML)
+        console.log(folderFound)
+        setStateNS(folderFound.notes) //state notes (NS)
+
+    }
+
+    const handleF=()=>{
+        setStateF('createdF')
+    }
+
+    const addFolderDB=async()=>{
+        const res=await fetch(`${server}/api/users/${user}/folders`,
+        {
+            method:'POST',
+            headers:{
+                "Content-type":"application/json"
+            },body:JSON.stringify(newF)
+        })
+        .then(console.log("folder added into db"))
+        getFolders()
+    }
+
+    const editNameF=(e)=>{
+        setNameF(e.target.value)
+        //create the folder
+        newF.nameFolder=e.target.value
+        newF.notes=[]
+        setNewF(newF)
     }
 
     const addFolder=()=>{
         return(
-            <div className='newFolder'>
-                <li class="menu-item" onClick={openFolder}><AiFillFolderOpen/> New Untitled Folder</li>
-                {/* <input className='nameFolder' type="text" value={nameF} onChange={editName}/> */}
-            </div>
+                <li class="menu-item"><AiFillFolderOpen/> 
+                    <input className='nameFolder' type="text" value={nameF} onChange={editNameF} onKeyDown={(e)=>{if(e.key==='Enter'){addFolderDB(); setStateF('')} }}/>
+                </li>
         )
+
+        
     }
 
 
     useEffect(()=>{
         getNotes()
-    },[])
-
-    useEffect(()=>{
         getFolders()
     },[])
 
-   
+  
+
 
     return(
         <div className="mainPage">
             
             <div className="container">
-            <nav>
-                <ul>
-                    <li><a href="#" class="logo"><img src="logo.jpg" alt=""/><span class="nav-item">Ase Notes</span></a></li>
-                    <li class="menu-item" onClick={toAccount}><FaUserCircle/> Cont Personal</li>
-                    <li class="menu-item" onClick={handleClick}><AiOutlineFile/>Notes</li>
-                    <li class="menu-item"><AiFillFolderOpen/> Folder</li>
-                    <li class="edit-item"><BsFillPencilFill/> Edit</li>
-                    <li class="add-item" onClick={handleClickF}><AiFillPlusCircle/> Add Folder</li>
-                   
-                </ul>
-            </nav>
+                <nav>
+                    <ul>
+                        <li><a class="logo"><img src="logo.jpg" alt=""/><span class="nav-item">Ase Notes</span></a></li>
+                        <li class="menu-item" onClick={toAccount}><FaUserCircle/> Cont Personal</li>
+                        <li class="menu-item" onClick={handleClick}><AiOutlineFile/>Notes</li>
+                        {showFolders()}
+                        {stateF==='createdF'?addFolder():""}
+                        <li class="add-item" onClick={handleF}><AiFillPlusCircle/> Add Folder</li>
+                        
+
+                    </ul>
+                </nav>
             </div>
 
             <div className="search">
@@ -311,11 +383,7 @@ function MainPage(){ //props.data
                             return <div>{note.title}</div>
                         })}
 
-                            
-
-                        {/* <input type="notes1" placeholder="Notes 1"/>           
-                        <input type="notes2" placeholder="Notes 2"/>   
-                        <input type="notes3" placeholder="Notes 3"/>  */}
+                        {stateF===''?"":addDivF()}
                     </ul>
                 </nav1>     
             </div>
