@@ -5,6 +5,7 @@ import { FaUserCircle } from "react-icons/fa"
 import { AiOutlineFile, AiFillFolderOpen, AiFillPlusCircle } from "react-icons/ai"
 import {CiSaveDown2 } from "react-icons/ci"
 import {FiShare } from "react-icons/fi"
+import logo from './logo.png'
 
 import './mainPage.css'
 
@@ -363,8 +364,7 @@ function MainPage(){ //props.data
             <div className="container">
                 <nav>
                     <ul>
-                        <li><a class="logo"><img src="logo.jpg" alt=""/><span class="nav-item">Ase Notes</span></a></li>
-                        <li class="menu-item" onClick={toAccount}><FaUserCircle/> Cont Personal</li>
+                        <li><a class="logo"><img src={logo} alt=""/><span class="nav-item">Ase Notes</span></a></li>
                         <li class="menu-item" onClick={handleClick}><AiOutlineFile/>Notes</li>
                         {showFolders()}
                         {stateF==='createdF'?addFolder():""}
@@ -403,7 +403,9 @@ function MainPage(){ //props.data
                         <li class="trash" onClick={deleteNote}><BsFillTrashFill/></li>
                         <li class="save"><CiSaveDown2/></li>
                         <li class="share"><FiShare/></li>
-                        <li class="plus" onClick={handleClickN}><AiFillPlusCircle/></li>
+                        <li class="plus" onClick={handleClickN}><AiFillPlusCircle/></li>   
+                        <li class="account" onClick={toAccount}><FaUserCircle/></li>
+
                     </ul>
                 </nav3>
             </div>

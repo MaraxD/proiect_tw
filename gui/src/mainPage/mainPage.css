@@ -1,54 +1,3 @@
-/* th{
-    width: inherit;
-    border: 2px solid grey;
-    height: 100%;
-}
-
-.groupN{
-    border-right: 2px solid white;
-    width: 20%;
-    height: 100%;
-
-}
-
-.notes{
-    border-right: 2px solid white;
-    width: 20%;
-    height: 100%;
-
-}
-
-.contentN{
-    border-right: 2px solid white;
-    width: 100%;
-    height: 100%;
-
-}
-
-input{
-    width: 90%;
-    border-color:white;
-}
-
-.note{
-    border: 2px solid grey;
-}
-
-#uploadImg{
-    width: 100px;
-    height: 100px;
-}
-
-.account{
-    cursor: pointer;
-}
-
-div{
-    cursor: pointer;
-} */
-
-
-
 body{
     outline: none;
     border: none;
@@ -57,7 +6,7 @@ body{
     font-family: "Poppins", sans-serif;
     height: 100%;
     width: 100%;
-    background: #dddddd;
+    background: #EAE3D2;
 }
 
 .container{
@@ -69,35 +18,48 @@ nav{
     bottom: 0;
     height: 100vh;
     left: 0;
-    background: #a9c8ed;
+    background: #1C3879;
     width: 200px;
     overflow: hidden;
     box-shadow: 0 20px 35px rgba(0,0,0,0.1);
 }
+
 .logo{
     text-align: center;
     display: flex;
-    margin: 10px 0 0 10px;
+    margin: 10px 0 15px 5px;
 }
+
 .logo img{
-    width: 60px;
-    height: 45px;
-    border-radius: 50%;
+    width: 70px;
+    height: 50px;
  }
+ 
 .logo span{
     font-weight: bold;
+    color: white;
     padding-left: 15px;
     font-size: 18px;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 li{
     display: inline;
 }
 
+nav .menu-item:hover{
+    background-color: #607EAA;
+    border-radius: 10px;
+    color: black;
+    transition: 0.5s;
+    width: 180px;
+    margin-left: 5px;
+}
+
 nav .menu-item{
     position: relative;
-    color: black;
+    color: white;
     font-size: 15px;
     display: table;
     width: 200px;
@@ -118,22 +80,24 @@ nav .edit-item{
     position: absolute;
     bottom: 8px;
     left: 0;
-    color: black;
+    color: white;
     font-size: 15px;
     display: table;
     width: 200px;
     padding: 5px;
+    cursor: pointer;
 }
 
 nav .add-item{
     position: absolute;
     bottom: 8px;
     left: 110px;
-    color: black;
+    color: white;
     font-size: 15px;
     display: table;
     width: 200px;
     padding: 5px;
+    cursor: pointer;
 }
 
 .search{
@@ -141,17 +105,29 @@ nav .add-item{
 
 }
 
+nav1 div:hover{
+    background-color: #EAE3D2;
+    border-radius: 10px;
+    color: black;
+    transition: 0.5s;
+    width: 227px;
+    margin-left: 5px;
+}
+
+
 nav1{
+    color: white;
     position: relative;
     top: 0;
     margin-left: 200px;
     bottom: 0;
     height: 100vh;
-    background: #c9daef;
+    background: #607EAA;
     width: 250px;
     overflow: hidden;
     box-shadow: 0 20px 35px rgba(0,0,0,0.1);
 }
+
 .search input[type=text]{
     position: relative;
     padding: 6px;
@@ -160,8 +136,9 @@ nav1{
     border: black;
     text-align: left;
     font-size: 15px;
-    width: 240px;
+    width: 227px;
     height: 50px; 
+    border-radius: 10px;
 }
 
 .note{
@@ -177,53 +154,24 @@ nav1{
     cursor: pointer;
 }
 
-.search input[type=notes1]{
-    position: relative;
-    padding: 6px;
-    margin-left: 2px;
-    top: 10px;
-    border: 1px rgb(203, 196, 196);
-    text-align: left;
-    font-size: 13px;
-    width: 246px;
-    height: 75px;
-}
-.search input[type=notes2]{
-    position: relative;
-    padding: 6px;
-    margin-left: 2px;
-    top: 15px;
-    border: 1px rgb(203, 196, 196);
-    text-align: left;
-    font-size: 13px;
-    width: 246px;
-    height: 75px;
-}
-.search input[type=notes3]{
-    position: relative;
-    padding: 6px;
-    margin-left: 2px;
-    top: 20px;
-    border: 1px rgb(203, 196, 196);
-    text-align: left;
-    font-size: 13px;
-    width: 246px;
-    height: 75px;
-}
+
 .write{
  display: flex;
 }
+
 nav2{
     position: absolute;
     top: 50px;
     margin-left: 460px;
     bottom: 0;
     height: 91vh;
-    background: #ffffff;
+    background: #F9F5EB;
+    border-radius: 20px;
     width: 68.5%;
     overflow: hidden;
-    box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+    box-shadow: 5px 5px 10px 10px rgba(0,0,0,0.1);
 }
+
 nav2 textarea{
     position: absolute;
     top: 5px;
@@ -234,12 +182,12 @@ nav2 textarea{
     font-size: 16px;
     resize: none;
     box-sizing: border-box;
-    background: #ffffff;
+    background: #F9F5EB;
     width: 100%;
 }
 .buttons{
     display: flex;
-    cursor: pointer;;
+    cursor: pointer;
 }
 nav3{
     position: absolute;
@@ -286,10 +234,11 @@ nav3 .share{
     width: 200px;
     padding: 5px;
 }
+
 nav3 .plus{
     position: absolute;
     top: 0;
-    left: 950px;
+    left: 930px;
     margin-right: 10px;
     color: black;
     font-size: 15px;
@@ -297,4 +246,19 @@ nav3 .plus{
     width: 200px;
     padding: 5px;
 }
+
+nav3 .account{
+    position: absolute;
+    top: 0;
+    left: 960px;
+    margin-right: 10px;
+    color: black;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+    padding: 5px;
+}
+
+
+
 
