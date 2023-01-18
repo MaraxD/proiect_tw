@@ -1,9 +1,11 @@
 TODO: <br>
     ->de preluat folderele din bd (de rezolvat eroarea Objects are not valid as a React child (found: [object Promise]))<br>
     ->pagina sa se muleze dupa dimensiunea ecranului<br>
-    ->mai trebuie adaugat inca un text box deasupra celui in care se scrie continutul (ca sa am cum sa trimit datele in bd)<br>
+    ->sa se pot adauga elemente media in notite<br>
+    ->ss mai adauge un search bar in coloana din stanga <br>
+    ->vezi cum se pot trimite date de la o componenta la alta
 
-->de rezolvat mai intai crud operations pe notite (https://jasonwatmore.com/post/2021/09/05/fetch-http-post-request-examples pt requests)
+->crud operations cu fetch(https://jasonwatmore.com/post/2021/09/05/fetch-http-post-request-examples pt requests)
 
 node App.js ca sa dai start la server<br>
 npm start ca sa incepi aplicatia (trebuie sa te muti mai intai in folder gui)<br>

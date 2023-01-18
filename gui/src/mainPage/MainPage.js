@@ -16,10 +16,10 @@ function MainPage(){ //props.data
 
     const[state,setState]=useState({query:'',list:[]})
     const[stateC,setStateC]=useState('') //state ul pentru click buton
-    const[stateN,setStateN]=useState('') //state ul pentru click buton
-    const[stateF,setStateF]=useState('') //state ul pentru click buton
-    let[stateD,setStateD]=useState('') //state ul pentru click div
-    const[load,setLoad]=useState('') //state ul pentru click div
+    const[stateN,setStateN]=useState('') //state ul pentru notita
+    const[stateF,setStateF]=useState('') //state ul pentru folder
+    const[stateD,setStateD]=useState('') //state ul pentru click div
+    const[load,setLoad]=useState('') //state ul pentru preluare imagini and stuff
 
 
     const[newElem,setElem]=useState({})
@@ -29,7 +29,10 @@ function MainPage(){ //props.data
     const[contentN, setContentN]=useState('')
     const[idN, setIdN]=useState(0)
 
+
     const navigate=useNavigate()
+
+   
 
     //OPERATIILE PENTRU NOTES
     const getNotes=async()=>{
@@ -82,6 +85,8 @@ function MainPage(){ //props.data
                 updateNoteDB(e)
             }
         })
+
+        setStateD('')
 
         
     }
@@ -159,15 +164,16 @@ function MainPage(){ //props.data
         let titlu=document.getElementsByClassName('title')[0].value,
             continut=document.getElementsByClassName('noteC')[0].value
 
-            newElem.title=titlu
-            newElem.content=continut
-            newElem.dateCreated='05/01/2023'
+        newElem.title=titlu
+        newElem.content=continut
+        newElem.dateCreated='05/01/2023' //aici de schimbat
 
+        setElem(newElem)
+        addNote()
+        document.getElementsByClassName('title')[0].value=''
+        document.getElementsByClassName('noteC')[0].value=''
 
-            setElem(newElem)
-            addNote()
-            document.getElementsByClassName('title')[0].value=''
-            document.getElementsByClassName('noteC')[0].value=''
+        setStateN('')
 
     }
 
@@ -186,7 +192,7 @@ function MainPage(){ //props.data
         )
     }
 
-    const deleteNote=(e)=>{
+    const deleteNote=()=>{
         deleteNoteDB(idN)
         notes.map((e)=>{
             if(e.id===idN){
@@ -194,6 +200,7 @@ function MainPage(){ //props.data
                 notes.splice(index,1)
             }
         })
+        setStateD('')
     }
 
     const deleteNoteDB=async(idN)=>{
