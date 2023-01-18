@@ -170,25 +170,6 @@ userRouter.delete("/:noteId/notes/:userId",async(req,res)=>{
 
 //http://localhost:8080/api/users/68c814e0-2e9b-466a-bed4-5c493a6ce11b/folders
 // get all the folders (pt afisare pe pagina)
-// userRouter.get("/:userId/folders",async(req,res)=>{
-//     try {
-//         const result=[]
-//         const user=await User.findByPk(req.params.userId)
-//         if(user){
-//             const folders=await user.getFolders()
-//             if(folders.length>0){
-//                 res.json(folders)
-//             }else{
-//                 res.status(204).json({"message":"this student doesn t have any folders"})
-//             }
-//         }else{
-//             res.status(404).json({"message":"couldnt find student with this id "})
-//         }
-//     } catch (error) {
-//         res.status(400).json({"message":"smth went wrong when getting the folders"})
-//     }
-// })
-
 userRouter.get("/:userId/folders",async(req,res)=>{
     try {
         const result=[]
@@ -204,7 +185,7 @@ userRouter.get("/:userId/folders",async(req,res)=>{
                 for(let n of await f.getNotes()){
                     folder.notes.push({
                         key:n.id,
-                        datCreated:n.datCreated,
+                        datCreated:n.dateCreated,
                         title:n.title,
                         content:n.content
                     })

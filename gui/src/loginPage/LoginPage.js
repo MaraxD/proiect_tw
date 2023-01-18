@@ -42,7 +42,7 @@ function LoginPage(){
 
     return (
         <div className="auth-form">
-                <div>
+                {/* <div>
                     <label htmlFor="email">email</label><br></br>
                     <input value={email} onChange={(e)=> setEmail(e.target.value)} type="email" placeholder="blahblah@stud.ase.ro" className="email" name="email"/>
                 </div>
@@ -52,7 +52,33 @@ function LoginPage(){
                     <input value={password} onChange={(e)=> setPassword(e.target.value)} type="password" placeholder="********" id="password" name="password"/>
                 </div>
                 
-               <button onClick={verifyData}>Log in</button>
+               <button onClick={verifyData}>Log in</button> */}
+
+<div class="box">
+    <div class="container">
+        <div class="top">
+            <span>ASE Notes</span>
+            <header>Login</header>
+        </div>
+        <div class="input-field">
+            <input type="text" class="input" placeholder="Username" id=""/>
+            <i class='bx bx-user' ></i>
+        </div>
+        <div class="input-field">
+            <input type="Password" class="input" placeholder="Password" id=""/>
+            <i class='bx bx-lock-alt'></i>
+        </div>
+        <div class="input-field">
+            <input type="submit" class="submit" value="Login" id=""/>
+        </div>
+        <div class="two-col">
+            <div class="one">
+               <input type="checkbox" name="" id="check"/>
+               <label for="check"> Remember Me</label>
+            </div>
+        </div>
+    </div>
+</div>    
           
         </div>
 

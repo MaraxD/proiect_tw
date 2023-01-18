@@ -1,8 +1,7 @@
 TODO: <br>
+    ->de preluat folderele din bd (de rezolvat eroarea Objects are not valid as a React child (found: [object Promise]))<br>
     ->pagina sa se muleze dupa dimensiunea ecranului<br>
-    ->cand apas pe "notes" trebuie sa apar notitele in dreapta sau direct fetch uiesc notitele sa se afiseze in stanga<br>
     ->mai trebuie adaugat inca un text box deasupra celui in care se scrie continutul (ca sa am cum sa trimit datele in bd)<br>
-    ->buton de save pentru notita? care e<br>
 
 ->de rezolvat mai intai crud operations pe notite (https://jasonwatmore.com/post/2021/09/05/fetch-http-post-request-examples pt requests)
 

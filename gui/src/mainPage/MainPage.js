@@ -19,18 +19,28 @@ function MainPage(){ //props.data
     const[stateN,setStateN]=useState('') //state ul pentru click buton
     const[stateF,setStateF]=useState('') //state ul pentru click buton
     let[stateD,setStateD]=useState('') //state ul pentru click div
+    const[load,setLoad]=useState('') //state ul pentru click div
+
 
     const[newElem,setElem]=useState({})
     const[nameF, setNameF]=useState('Untitled')
+    //din nou, nu stiu daca e chiar facut asa sau se putea mai usor
+    const[nameN, setNameN]=useState('')
+    const[contentN, setContentN]=useState('')
+    const[idN, setIdN]=useState(0)
 
     const navigate=useNavigate()
 
     //OPERATIILE PENTRU NOTES
     const getNotes=async()=>{
         //again id ul nu trebuie sa fie hardcodat
-        const res=await fetch(`${server}/api/users/274f383e-97e1-4ae1-90f3-07818592c98b/notes`)
+        const res=await fetch(`${server}/api/users/da067d2c-6306-4bce-b93a-bfb3ef831fb1/notes`)
         const data=await res.json()
         setNotes(data)
+
+        const res2=await fetch(`${server}/api/users/da067d2c-6306-4bce-b93a-bfb3ef831fb1/folders`)
+        const data2=await res2.json()
+        setFolders(data2)
     }
 
 
@@ -46,20 +56,54 @@ function MainPage(){ //props.data
     //     console.log(data)
     // }
 
-    const handleClickD=()=>{
-        stateD='click'
-        setStateD(stateD)
+
+    const getSelectedNote=(e)=>{
+        setStateD('click')
+        let noteFound=notes.find(elem=>elem.title===e.target.innerHTML)
+        setNameN(noteFound.title)
+        setContentN(noteFound.content)
+        setIdN(noteFound.id)
+
     }
 
-    const showSelectedNote=(e)=>{
-            let noteFound=notes.find(elem=>elem.title===e.target.innerHTML)
-            console.log(stateD)
+    const editData=(e)=>{
+        if(e.target.className==="title"){
+            setNameN(e.target.value)
+        }else if(e.target.className==="content"){
+            setContentN(e.target.value)
+        }
+    }
+
+    const updateNote=()=>{
+        notes.map((e)=>{
+            if(e.id===idN){
+                e.content=contentN
+                e.title=nameN
+                updateNoteDB(e)
+            }
+        })
+
+        
+    }
+
+    const updateNoteDB=async(updatedElem)=>{
+        const res=await fetch(`${server}/api/users/${idN}/notes/da067d2c-6306-4bce-b93a-bfb3ef831fb1`,
+        {
+            method:'PUT',
+            headers:{
+                "Content-type":"application/json"
+            },body:JSON.stringify(updatedElem)
+        })
+        .then(console.log("note updated into db"))
+        getNotes()
+    }
+
+    const showSelectedNote=()=>{
             return(
                 <div>
-                    {/* <button className='delete'>Delete</button> */}
-                    <input type='text' value={noteFound.title}/>
-                    <input type='text' value={noteFound.content}/>
-                    {/* <button className='save'>Save</button> */}
+                    <input className='title' type='text' value={nameN} onChange={editData}/>
+                    <input className='content' type='text' value={contentN} onChange={editData}/>
+                    <button className='save' onClick={updateNote}>Update note</button>
                 </div>
             ) 
         
@@ -74,7 +118,7 @@ function MainPage(){ //props.data
         }else{
             return notes.map((e)=>{
                 return(
-                    <div className='note' onClick={handleClickD}>{e.title}</div>
+                    <div className='note' onClick={getSelectedNote}>{e.title}</div>
                 )
             })
         }
@@ -97,8 +141,7 @@ function MainPage(){ //props.data
 
     //adds a note to db
     const addNote=async()=>{
-
-        const res=await fetch(`${server}/api/users/14d97ab7-d59f-4b9f-a16b-29c2b3806694/notes`,
+        const res=await fetch(`${server}/api/users/da067d2c-6306-4bce-b93a-bfb3ef831fb1/notes`,
         {
             method:'POST',
             headers:{
@@ -143,6 +186,25 @@ function MainPage(){ //props.data
         )
     }
 
+    const deleteNote=(e)=>{
+        deleteNoteDB(idN)
+        notes.map((e)=>{
+            if(e.id===idN){
+                const index=notes.indexOf(e)
+                notes.splice(index,1)
+            }
+        })
+    }
+
+    const deleteNoteDB=async(idN)=>{
+        const res=await fetch(`${server}/api/users/${idN}/notes/da067d2c-6306-4bce-b93a-bfb3ef831fb1`,
+        {
+            method:'DELETE'
+        })
+        .then(console.log("note deleted from db"))
+        getNotes()
+    }
+
     //handleChange for the searchbar
     const handleChange=(e)=>{
         const results=notes.filter(note=>{
@@ -183,9 +245,18 @@ function MainPage(){ //props.data
     //OPERATIILE PENTRU FOLDERS
     //trebuie testat
     const getFolders=async()=>{
-        const res=await fetch(`${server}/api/users/14d97ab7-d59f-4b9f-a16b-29c2b3806694/folders`)
+        const res=await fetch(`${server}/api/users/da067d2c-6306-4bce-b93a-bfb3ef831fb1/folders`)
         const data=await res.json()
         setFolders(data)
+    }
+
+    //TODO: de rezolvat aici
+    const showFolders=async()=>{
+        return(
+            folders.map((e)=>{
+                <div class="folder-item"><AiFillFolderOpen/>{ e.nameFolder}</div>
+            })
+        )
     }
 
     const addFolder=()=>{
@@ -202,10 +273,15 @@ function MainPage(){ //props.data
         getNotes()
     },[])
 
+    useEffect(()=>{
+        getFolders()
+    },[])
+
    
 
     return(
         <div className="mainPage">
+            
             <div className="container">
             <nav>
                 <ul>
@@ -215,7 +291,7 @@ function MainPage(){ //props.data
                     <li class="menu-item"><AiFillFolderOpen/> Folder</li>
                     <li class="edit-item"><BsFillPencilFill/> Edit</li>
                     <li class="add-item" onClick={handleClickF}><AiFillPlusCircle/> Add Folder</li>
-                    {stateF===''?"":addFolder()}
+                   
                 </ul>
             </nav>
             </div>
@@ -224,9 +300,10 @@ function MainPage(){ //props.data
                 <nav1>
                     <ul>
                         <input type="text" placeholder="Search.." onChange={handleChange}/>                         
-                        {state.query===''?addDiv():state.list.map(note=>{
+                        {stateC===''?"":state.query===''?addDiv():state.list.map(note=>{
                             return <div>{note.title}</div>
                         })}
+
                             
 
                         {/* <input type="notes1" placeholder="Notes 1"/>           
@@ -240,6 +317,7 @@ function MainPage(){ //props.data
                 <nav2>
                     <ul>
                         {stateN===''?"":addEditableDiv()}
+                        {stateD===''?"":showSelectedNote()}
                         
                     </ul>
                 </nav2>
@@ -247,7 +325,7 @@ function MainPage(){ //props.data
             <div class="buttons">
                 <nav3>
                     <ul>
-                        <li class="trash"><BsFillTrashFill/></li>
+                        <li class="trash" onClick={deleteNote}><BsFillTrashFill/></li>
                         <li class="save"><CiSaveDown2/></li>
                         <li class="share"><FiShare/></li>
                         <li class="plus" onClick={handleClickN}><AiFillPlusCircle/></li>
