@@ -1,0 +1,293 @@
+.MainPage{
+    outline: none;
+    border: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    height: 100%;
+    width: 100%;
+    background: #EAE3D2;
+}
+
+.container{
+    display: flex;
+}
+
+.nav{
+    position: absolute;
+    top: 70px;
+    bottom: 0;
+    height: 100vh;
+    left: 0;
+    background: #cfcfc4;
+    width: 200px;
+    overflow: hidden;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+}
+
+.logo{
+    text-align: center;
+    display: flex;
+    margin: 10px 0 15px 5px;
+}
+
+.logo img{
+    width: 70px;
+    height: 50px;
+ }
+ 
+.logo span{
+    font-weight: bold;
+    color: black;
+    padding-left: 15px;
+    font-size: 18px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+li{
+    display: inline;
+}
+
+.nav .menu-item:hover{
+    background-color: #EAE3D2;
+    border-radius: 10px;
+    color: black;
+    transition: 0.5s;
+    width: 180px;
+    height: 20px;
+    margin-left: 5px;
+}
+
+.nav .glyphicon{
+    color: #1C3879;
+}
+
+.nav2 .glyphicon{
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #1C3879;
+    cursor: pointer;
+}
+
+.shownNote {
+   margin-left: 10px;
+}
+
+
+.nav .menu-item{
+    margin: 10px 10px 10px 10px;
+    position: relative;
+    color: black;
+    font-size: 15px;
+    display: table;
+    width: 180px;
+    height: 20px;
+    padding: 5px;
+    padding-left: 5px;
+    cursor: pointer;
+    
+}
+
+.glyphicon{
+    position: relative;
+    width: 20px;
+    height: 20px;
+    top: 5px;
+    font-size: 20px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+.buttons .nav3 .glyphicon:hover{
+    background-color: grey; 
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    transition: 0.5s;
+    border-radius: 10px;
+}
+
+.buttons .nav3 .glyphicon{
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 5px 5px 5px 5px;
+}
+
+.nav .edit-item{
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    color: white;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.nav .add-item{
+    position: absolute;
+    bottom: 8px;
+    left: 110px;
+    color: white;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.search{
+    display: flex;
+
+}
+
+.nav1 div:hover{
+    background-color: #EAE3D2;
+    border-radius: 10px;
+    color: black;
+    transition: 0.5s;
+    width: 227px;
+    margin-left: 5px;
+}
+
+.Note .note{
+    font-weight: bold;
+
+}
+
+div .Note{
+    background-color:  #cfcfc4;
+    margin: 10px 10px 10px 10px;
+    font-size: 15px;
+    color: black;
+    transition: 0.5s;
+    display: table;
+    width: 227px;
+    height: 50px;
+    margin-left: 5px;
+    padding: 5px;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+
+
+.nav1{
+    color: black;
+    position: relative;
+    top: -5px;
+    margin-left: 200px;
+    bottom: 0;
+    height: 100vh;
+    background: #cfcfc4;
+    width: 250px;
+    overflow: hidden;
+    border-left: 1px solid grey;
+}
+
+.search input[type=text]{
+    position: relative;
+    padding: 6px;
+    margin-right: 10px;
+    margin:10px 10px 10px 10px;
+    border: black;
+    text-align: left;
+    font-size: 15px;
+    width: 215px;
+    height: 20px; 
+    border-radius: 10px;
+}
+
+.Note{
+    position: relative;
+    padding: 6px;
+    margin-left: 2px;
+    top: 10px;
+    border: 1px rgb(203, 196, 196);
+    text-align: left;
+    font-size: 13px;
+    width: 246px;
+    height: 75px;
+    cursor: pointer;
+}
+
+
+.nav2{
+    position: absolute;
+    top: 70px;
+    margin-left: 450px;
+    bottom: 0;
+    height: 91vh;
+    background: white;
+    width: 100vh;
+    overflow: hidden;
+    border-left: 1px solid grey;
+}
+
+
+div .buttons{
+    display: flex;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.nav3{
+    position: absolute;
+    top: 1px;
+    height: 90vh;
+    margin-left: 360px;
+    bottom: 0;
+}
+
+
+.nav3 .save{
+    position: absolute;
+    top: 0;
+    margin-left: 50px;
+    color: black;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+    padding: 5px;
+}
+
+.nav3 .share{
+    position: absolute;
+    top: 0;
+    left: 900px;
+    color: black;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+}
+
+.nav3 .plus{
+    position: absolute;
+    top: 0;
+    left: 930px;
+    color: black;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+}
+
+.nav3 .account{
+    position: absolute;
+    top: 0;
+    left: 960px;
+    color: black;
+    font-size: 15px;
+    display: table;
+    width: 200px;
+}
+
+
+
+

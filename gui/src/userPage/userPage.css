@@ -1,0 +1,95 @@
+html,body{height: 100%;}
+
+.user{
+    position: absolute;
+    top: 10%;
+    left: 30%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    height: inherit;
+    border-radius: 50px;
+    box-shadow:5px 5px 10px 10px #d0cdcdb1 ;
+}
+
+.subUser{
+    margin: 25px 25px 25px 25px;
+    cursor: default;
+}
+
+button{
+    cursor: pointer;
+}
+
+.personalInfo .email{
+    margin-top: 10px;
+}
+
+.personalInfo .fullName{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.pLN{
+
+    margin-top: 10px;
+}
+
+.name{
+    cursor: text;
+    max-width:50px;
+    display: inline-block;
+}
+
+.lastName{
+    cursor: text;
+    max-width:50px;
+    display: inline-block;
+}
+
+img{
+    max-width: 7rem;
+}
+
+.userPhoto{
+    border-top: 1px solid #808080b1;
+    border-bottom: 1px solid #808080b1;
+}
+
+.btnChange{
+    margin-left: 10px;
+}
+
+.btnDelete{
+    margin-top: 10px;
+}
+
+.personalInfo{
+    border-bottom: 1px solid #808080b1;
+}
+
+.prefName{
+    margin-bottom: 10px;
+}
+
+.btnGroup{
+    margin-top: 10px;
+}
+
+.btnUpdate{
+    margin-right: 10px;
+}
+
+.logout{
+    margin-top: 10px;
+    cursor: pointer;
+    color: red;
+}
+
+/* responsiveness */
+@media all and (min-width: 60rem){
+    .user{
+        display: flex;
+        
+    }
+}
