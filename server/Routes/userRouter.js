@@ -33,9 +33,9 @@ userRouter.post("/addNewUser",async(req,res)=>{
 });
 
 //get a specific user (useful for when a user logs in and the profile should corespond with the email put in the login page)
-userRouter.get("/:userEmail/users", async(req, res)=>{
+userRouter.get("/:userId/users", async(req, res)=>{
     try {
-        const findUser= await User.findAll({where:{email: req.params.userEmail}})
+        const findUser= await User.findByPk(req.params.userId)
         if(findUser){
             res.json(findUser)
         }else{
@@ -47,15 +47,15 @@ userRouter.get("/:userEmail/users", async(req, res)=>{
 })
 
 //update the student s data
-userRouter.put("/:userEmail/users",async(req,res)=>{
+userRouter.put("/:userId/users",async(req,res)=>{
     try {
-        const user= await User.findAll({where:{email: req.params.userEmail}})
+        const user= await User.findByPk(req.params.userId)
         const userM=user.shift()
         if(userM){
             await userM.update(req.body)
             return res.status(204).json({"message":"student s info has been updated"})
         }else{
-            return res.status(404).json({"message":`could not find student with the id: ${req.params.userEmail}`})
+            return res.status(404).json({"message":`could not find student with the id: ${req.params.userId}`})
         }
 
         
@@ -65,10 +65,10 @@ userRouter.put("/:userEmail/users",async(req,res)=>{
 })
 
 //delete a student
-userRouter.delete("/:userEmail/users",async(req,res)=>{
+userRouter.delete("/:userId/users",async(req,res)=>{
     try {
         //before deleting the user i will also get its notes and delete them 
-        const user= await User.findAll({where:{email: req.params.userEmail}})
+        const user= await User.findByPk(req.params.userId)
         const userM=user.shift()
         if(userM){
             await userM.destroy()

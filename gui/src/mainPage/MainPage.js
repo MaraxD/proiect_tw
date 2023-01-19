@@ -16,6 +16,7 @@ const server="http://localhost:8080"
 function MainPage(){ //props.data
     const location=useLocation()
     const user=location.state.user
+    const userEmail=location.state.userMail
 
     const[notes,setNotes]=useState([{}])
     const[folders,setFolders]=useState([{}]) //trebuie sa vad ce returneaza
@@ -261,8 +262,9 @@ function MainPage(){ //props.data
         setStateN('clicked')
     }
 
+   
     const toAccount=()=>{
-        navigate('/userPage')
+        navigate('/userPage',{state:{userId:user}})
     }
 
    

@@ -1,11 +1,13 @@
+html,body{height: 100%;}
+
 .user{
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 10%;
+    left: 30%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 600px;
+    width: 500px;
     height: inherit;
     border-radius: 50px;
     box-shadow:5px 5px 10px 10px #d0cdcdb1 ;
@@ -20,22 +22,33 @@ button{
     cursor: pointer;
 }
 
+.personalInfo .email{
+    margin-top: 10px;
+}
+
+.personalInfo .fullName{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.pLN{
+
+    margin-top: 10px;
+}
+
 .name{
     cursor: text;
-    width:50px;
+    max-width:50px;
     display: inline-block;
 }
 
 .lastName{
     cursor: text;
-    width:50px;
+    max-width:50px;
     display: inline-block;
 }
 
 img{
-    height: 100px;
-    width: 100px;
-    
+    max-width: 7rem;
 }
 
 .userPhoto{
@@ -61,4 +74,16 @@ img{
 
 .btnGroup{
     margin-top: 10px;
+}
+
+.btnUpdate{
+    margin-right: 10px;
+}
+
+/* responsiveness */
+@media all and (min-width: 60rem){
+    .user{
+        display: flex;
+        
+    }
 }
