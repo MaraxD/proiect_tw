@@ -19,7 +19,7 @@
     bottom: 0;
     height: 100vh;
     left: 0;
-    background: #1C3879;
+    background: #cfcfc4;
     width: 200px;
     overflow: hidden;
     box-shadow: 0 20px 35px rgba(0,0,0,0.1);
@@ -50,7 +50,7 @@ li{
 }
 
 .nav .menu-item:hover{
-    background-color: #607EAA;
+    background-color: #EAE3D2;
     border-radius: 10px;
     color: black;
     transition: 0.5s;
@@ -59,10 +59,27 @@ li{
     margin-left: 5px;
 }
 
+.nav .glyphicon{
+    color: #1C3879;
+}
+
+.nav2 .glyphicon{
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #1C3879;
+    cursor: pointer;
+}
+
+.shownNote {
+   margin-left: 10px;
+}
+
+
 .nav .menu-item{
     margin: 10px 10px 10px 10px;
     position: relative;
-    color: white;
+    color: black;
     font-size: 15px;
     display: table;
     width: 180px;
@@ -84,7 +101,7 @@ li{
 }
 
 .buttons .nav3 .glyphicon:hover{
-    background-color: grey; /*de schimbat culoarea aici*/
+    background-color: grey; 
     width: 20px;
     height: 20px;
     margin-left: 20px;
@@ -139,12 +156,16 @@ li{
     margin-left: 5px;
 }
 
-div .note{
+.Note .note{
     font-weight: bold;
-    background-color: #607EAA;
+
+}
+
+div .Note{
+    background-color:  #cfcfc4;
     margin: 10px 10px 10px 10px;
     font-size: 15px;
-    color: white;
+    color: black;
     transition: 0.5s;
     display: table;
     width: 227px;
@@ -155,17 +176,19 @@ div .note{
     cursor: pointer;
 }
 
+
+
 .nav1{
-    color: white;
+    color: black;
     position: relative;
     top: -5px;
     margin-left: 200px;
     bottom: 0;
     height: 100vh;
-    background: #607EAA;
+    background: #cfcfc4;
     width: 250px;
     overflow: hidden;
-    box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+    border-left: 1px solid grey;
 }
 
 .search input[type=text]{
@@ -181,7 +204,7 @@ div .note{
     border-radius: 10px;
 }
 
-.note{
+.Note{
     position: relative;
     padding: 6px;
     margin-left: 2px;
@@ -198,37 +221,14 @@ div .note{
 .nav2{
     position: absolute;
     top: 70px;
-    margin-left: 460px;
+    margin-left: 450px;
     bottom: 0;
     height: 91vh;
-    background: #e4b130;
-    width: 100%;
+    background: white;
+    width: 100vh;
     overflow: hidden;
-    box-shadow: 5px 5px 10px 10px rgba(0,0,0,0.1);
+    border-left: 1px solid grey;
 }
-
-.nav2 textarea{
-    position: absolute;
-    top: 5px;
-    margin-left: 5px;
-    bottom: 0;
-    height: 100%;
-    padding: 12px 20px;
-    font-size: 16px;
-    resize: none;
-    box-sizing: border-box;
-    background: #F9F5EB;
-    width: 100%;
-}
-
-
-/* position: relative;
-width: 20px;
-height: 20px;
-top: 5px;
-font-size: 20px;
-text-align: center;
-margin-right: 5px; */
 
 
 div .buttons{
@@ -237,30 +237,16 @@ div .buttons{
     width: 20px;
     height: 20px;
 }
+
 .nav3{
     position: absolute;
     top: 1px;
-    margin-left: 460px;
+    height: 90vh;
+    margin-left: 360px;
     bottom: 0;
 }
-.nav3 .glyphicon{
-    position: relative;
-    width: 50px;
-    height: 40px;
-    top: 14px;
-    font-size: 20px;
-    text-align: center;
-}
-.nav3 .trash{
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: black;
-    font-size: 15px;
-    display: table;
-    width: 200px;
-    padding: 5px;
-}
+
+
 .nav3 .save{
     position: absolute;
     top: 0;
@@ -271,40 +257,35 @@ div .buttons{
     width: 200px;
     padding: 5px;
 }
+
 .nav3 .share{
     position: absolute;
     top: 0;
     left: 900px;
-    margin-right: 10px;
     color: black;
     font-size: 15px;
     display: table;
     width: 200px;
-    padding: 5px;
 }
 
 .nav3 .plus{
     position: absolute;
     top: 0;
     left: 930px;
-    margin-right: 10px;
     color: black;
     font-size: 15px;
     display: table;
     width: 200px;
-    padding: 5px;
 }
 
 .nav3 .account{
     position: absolute;
     top: 0;
     left: 960px;
-    margin-right: 10px;
     color: black;
     font-size: 15px;
     display: table;
     width: 200px;
-    padding: 5px;
 }
 
 

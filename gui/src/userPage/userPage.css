@@ -80,6 +80,12 @@ img{
     margin-right: 10px;
 }
 
+.logout{
+    margin-top: 10px;
+    cursor: pointer;
+    color: red;
+}
+
 /* responsiveness */
 @media all and (min-width: 60rem){
     .user{

@@ -63,6 +63,11 @@ function UserPage(){
         navigate('/mainPage',{state:{user:userId}})
     }
 
+    const goMainPage=()=>{
+        navigate('/')
+    }
+
+
     useEffect(()=>{
         getUser()
     },[])
@@ -104,6 +109,8 @@ function UserPage(){
                     <button className='btnUpdate' onClick={changeData}>Update</button>
                     <button className='btnCancel'onClick={goHome}>Go home</button>
                 </div>
+
+                <div className='logout' onClick={goMainPage}>Log out</div>
             </div>
             
             

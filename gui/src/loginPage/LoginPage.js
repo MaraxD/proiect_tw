@@ -29,11 +29,11 @@ function LoginPage(){
                     const userId=u.id
                     navigate('/mainPage',{state:{user:userId}})
                 }else{
-                    console.log('datele nu au fost gasite in BD')
+                    alert('datele nu au fost gasite in BD')
                 }
             }   
         }else{
-            console.log('mailul nu e de ase')
+            alert('mailul nu e de ase')
         }
         
     }
@@ -46,14 +46,14 @@ function LoginPage(){
     return (
         <div className="auth-form">
                 <div class="box">
-                    <div class="container">
+                    <div class="container-auth">
                         <div class="top">
                             <span>ASE Notes</span>
                             <header>Log in</header>
                         </div>
                         <div class="input-field">
                             <input type="text" class="input" placeholder="Username" id="" value={email} onChange={(e)=> setEmail(e.target.value)}/>
-                             <AiOutlineUser className="bx"/> 
+                            <AiOutlineUser className="bx"/> 
                         </div>
                         <div class="input-field">
                             <input type="Password" class="input" placeholder="Password" id="" value={password} onChange={(e)=> setPassword(e.target.value)}/>
@@ -62,18 +62,56 @@ function LoginPage(){
                         <div class="input-field">
                             <input type="submit" class="submit" value="Log in" id="" onClick={verifyData}/>
                         </div>
-                        <div class="two-col">
-                            <div class="one">
-                            <input type="checkbox" name="" id="check"/>
-                            <label for="check"> Remember Me</label>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>    
+
+
+                
           
         </div>
 
+        // <div className='containerLP'>
+        //     <div className='login-leftLP'>
+        //         <div className='login-headerLP'>
+        //             <h1> ASE Notes </h1>
+        //             <p>Please log in to use the platform! ^_^</p>
+        //         </div>
+
+        //         <form className='login-formLP'>
+        //             <div className='login-form-contentLP'>
+        //                 <div className='form-itemLP'>
+        //                     <label htmlFor='email'>Write Email</label>
+        //                     <input type="text" id="email" value={email} onChange={(e)=> setEmail(e.target.value)}></input>
+        //                 </div>
+
+        //                 <div className='form-itemLP'>
+        //                     <label htmlFor='password'>Enter Password</label>
+        //                     <input type="password" id="password" value={password} onChange={(e)=> setPassword(e.target.value)}></input>
+        //                 </div>
+
+        //                 <div className='form-itemLP'>
+        //                     <div className='checkbox'>
+        //                         <input type="checkbox" id="rememberMeCheckbox" ></input>
+        //                         <label htmlFor='rememberMeCheckbox' class="checkboxLabelLP">Remember me</label>
+                                
+        //                     </div>
+        //                 </div>
+        //                 <button type='submit' onClick={verifyData}>Log in</button>
+        //             </div>
+
+        //             <div className='login-form-footerLP'></div>
+        //         </form>
+
+        //     </div>
+
+        //     <div className='login-rightLP'>
+        //         <img src={require('./ase_pic.jpg')} alt='imagine ase login'/>
+        //     </div>
+        // </div>
+
     )
+    
     
 }
 export default LoginPage

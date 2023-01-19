@@ -161,11 +161,7 @@ userRouter.delete("/:noteId/notes/:userId",async(req,res)=>{
     }
 })
 
-// var date=new Date()
-//                 var dd=String(date.getDate()).padStart(2,'0')
-//                 var mm=String(date.getMonth()+1).padStart(2,'0')
-//                 var yyyy=date.getFullYear()
-//                 date=dd+'/'+mm+'/'+yyyy
+
 
 
 //http://localhost:8080/api/users/68c814e0-2e9b-466a-bed4-5c493a6ce11b/folders

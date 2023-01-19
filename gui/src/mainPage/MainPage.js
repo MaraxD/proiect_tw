@@ -114,7 +114,7 @@ function MainPage(){ //props.data
 
     const showSelectedNote=()=>{
             return(
-                <div>
+                <div className='shownNote'>
                     <input className='title' type='text' value={nameN} onChange={editData}/>
                     <input className='content' type='text' value={contentN} onChange={editData}/>
                     <button className='save' onClick={updateNote}>Update note</button>
@@ -132,7 +132,10 @@ function MainPage(){ //props.data
         }else{
             return notes.map((e)=>{
                 return(
-                    <div className='note' onClick={getSelectedNote}>{e.title}</div>
+                    <div className='Note'>
+                        <div className='note' onClick={getSelectedNote}>{e.title}</div>
+                        <div className='date' >{e.dateCreated}</div>
+                    </div>
                 )
             })
         }
@@ -194,7 +197,7 @@ function MainPage(){ //props.data
     //adds the inputs when the user want to create a new note
     const addEditableDiv=()=>{
         return (
-            <div>
+            <div className='shownNote'>
                 <input className='title' type="text" placeholder='Title..' />
                 <input className='noteC' type="text" placeholder='Lorem ipsum..'/>
                 {/* <input type='file' className='upload'/>
@@ -284,7 +287,6 @@ function MainPage(){ //props.data
                     <div>
                         <li class="menu-item"><AiFillFolderOpen className='glyphicon'/>
                             <li onClick={openFolder}>{e.nameFolder}</li>
-                        
                         </li>
                         {stateF==='opened'? showDBtn():""}
                     </div>
@@ -392,9 +394,7 @@ function MainPage(){ //props.data
                 <li class="menu-item"><AiFillFolderOpen className='glyphicon'/> 
                     <input className='nameFolder' type="text" value={nameF} onChange={editNameF} onKeyDown={(e)=>{if(e.key==='Enter'){addFolderDB(); setStateF('')} }}/>
                 </li>
-        )
-
-        
+        )  
     }
 
 
@@ -437,7 +437,7 @@ function MainPage(){ //props.data
                      
             </div>
 
-            <div class="write">
+            <div className="write">
                     
                     <ul className='nav2'>
                         <li class="trash" onClick={deleteNote} title='Delete this note'><BsFillTrashFill className='glyphicon'/></li>
