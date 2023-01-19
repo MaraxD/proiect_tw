@@ -1,4 +1,4 @@
-body{
+.MainPage{
     outline: none;
     border: none;
     text-decoration: none;
@@ -12,9 +12,10 @@ body{
 .container{
     display: flex;
 }
-nav{
+
+.nav{
     position: absolute;
-    top: 0;
+    top: 70px;
     bottom: 0;
     height: 100vh;
     left: 0;
@@ -37,7 +38,7 @@ nav{
  
 .logo span{
     font-weight: bold;
-    color: white;
+    color: black;
     padding-left: 15px;
     font-size: 18px;
     text-transform: uppercase;
@@ -48,35 +49,59 @@ li{
     display: inline;
 }
 
-nav .menu-item:hover{
+.nav .menu-item:hover{
     background-color: #607EAA;
     border-radius: 10px;
     color: black;
     transition: 0.5s;
     width: 180px;
+    height: 20px;
     margin-left: 5px;
 }
 
-nav .menu-item{
+.nav .menu-item{
+    margin: 10px 10px 10px 10px;
     position: relative;
     color: white;
     font-size: 15px;
     display: table;
-    width: 200px;
+    width: 180px;
+    height: 20px;
     padding: 5px;
+    padding-left: 5px;
     cursor: pointer;
     
 }
-nav .glyphicon{
+
+.glyphicon{
     position: relative;
-    width: 50px;
-    height: 40px;
-    top: 14px;
+    width: 20px;
+    height: 20px;
+    top: 5px;
     font-size: 20px;
     text-align: center;
+    margin-right: 5px;
 }
 
-nav .edit-item{
+.buttons .nav3 .glyphicon:hover{
+    background-color: grey; /*de schimbat culoarea aici*/
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    transition: 0.5s;
+    border-radius: 10px;
+}
+
+.buttons .nav3 .glyphicon{
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 5px 5px 5px 5px;
+}
+
+.nav .edit-item{
     position: absolute;
     bottom: 8px;
     left: 0;
@@ -88,7 +113,7 @@ nav .edit-item{
     cursor: pointer;
 }
 
-nav .add-item{
+.nav .add-item{
     position: absolute;
     bottom: 8px;
     left: 110px;
@@ -105,7 +130,7 @@ nav .add-item{
 
 }
 
-nav1 div:hover{
+.nav1 div:hover{
     background-color: #EAE3D2;
     border-radius: 10px;
     color: black;
@@ -114,11 +139,26 @@ nav1 div:hover{
     margin-left: 5px;
 }
 
+div .note{
+    font-weight: bold;
+    background-color: #607EAA;
+    margin: 10px 10px 10px 10px;
+    font-size: 15px;
+    color: white;
+    transition: 0.5s;
+    display: table;
+    width: 227px;
+    height: 50px;
+    margin-left: 5px;
+    padding: 5px;
+    padding-left: 5px;
+    cursor: pointer;
+}
 
-nav1{
+.nav1{
     color: white;
     position: relative;
-    top: 0;
+    top: -5px;
     margin-left: 200px;
     bottom: 0;
     height: 100vh;
@@ -131,13 +171,13 @@ nav1{
 .search input[type=text]{
     position: relative;
     padding: 6px;
-    margin-left: 5px;
-    top: 2px;
+    margin-right: 10px;
+    margin:10px 10px 10px 10px;
     border: black;
     text-align: left;
     font-size: 15px;
-    width: 227px;
-    height: 50px; 
+    width: 215px;
+    height: 20px; 
     border-radius: 10px;
 }
 
@@ -155,29 +195,24 @@ nav1{
 }
 
 
-.write{
- display: flex;
-}
-
-nav2{
+.nav2{
     position: absolute;
-    top: 50px;
+    top: 70px;
     margin-left: 460px;
     bottom: 0;
     height: 91vh;
-    background: #F9F5EB;
-    border-radius: 20px;
-    width: 68.5%;
+    background: #e4b130;
+    width: 100%;
     overflow: hidden;
     box-shadow: 5px 5px 10px 10px rgba(0,0,0,0.1);
 }
 
-nav2 textarea{
+.nav2 textarea{
     position: absolute;
     top: 5px;
     margin-left: 5px;
     bottom: 0;
-    height: 91vh;
+    height: 100%;
     padding: 12px 20px;
     font-size: 16px;
     resize: none;
@@ -185,17 +220,30 @@ nav2 textarea{
     background: #F9F5EB;
     width: 100%;
 }
-.buttons{
+
+
+/* position: relative;
+width: 20px;
+height: 20px;
+top: 5px;
+font-size: 20px;
+text-align: center;
+margin-right: 5px; */
+
+
+div .buttons{
     display: flex;
     cursor: pointer;
+    width: 20px;
+    height: 20px;
 }
-nav3{
+.nav3{
     position: absolute;
     top: 1px;
     margin-left: 460px;
     bottom: 0;
 }
-nav3 .glyphicon{
+.nav3 .glyphicon{
     position: relative;
     width: 50px;
     height: 40px;
@@ -203,7 +251,7 @@ nav3 .glyphicon{
     font-size: 20px;
     text-align: center;
 }
-nav3 .trash{
+.nav3 .trash{
     position: absolute;
     top: 0;
     left: 0;
@@ -213,7 +261,7 @@ nav3 .trash{
     width: 200px;
     padding: 5px;
 }
-nav3 .save{
+.nav3 .save{
     position: absolute;
     top: 0;
     margin-left: 50px;
@@ -223,7 +271,7 @@ nav3 .save{
     width: 200px;
     padding: 5px;
 }
-nav3 .share{
+.nav3 .share{
     position: absolute;
     top: 0;
     left: 900px;
@@ -235,7 +283,7 @@ nav3 .share{
     padding: 5px;
 }
 
-nav3 .plus{
+.nav3 .plus{
     position: absolute;
     top: 0;
     left: 930px;
@@ -247,7 +295,7 @@ nav3 .plus{
     padding: 5px;
 }
 
-nav3 .account{
+.nav3 .account{
     position: absolute;
     top: 0;
     left: 960px;

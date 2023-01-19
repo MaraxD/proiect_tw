@@ -272,9 +272,9 @@ userRouter.post("/:idFolder/users/:userId",async(req,res)=>{
     try {
         const user=await User.findByPk(req.params.userId)
         if(user){
-            const folder=await user.getFolders({where:{id:req.params.idFolder}})
+            const folder=await Folder.findByPk(req.params.idFolder)
             if(folder){
-                //cerarea si inserarea notitelor
+                //crearea si inserarea notitelor
                 const note=await Note.create(req.body)
                 folder.addNote(note)
                 await folder.save()
@@ -325,10 +325,10 @@ userRouter.delete("/:idFolder/users/:userId/notes/:noteId",async(req,res)=>{
     try {
         const user=await User.findByPk(req.params.userId)
         if(user){
-            const folder=await user.getFolders({where:{id:req.params.idFolder}})
+            const folder=await Folder.findByPk()
             const folderS=folder.shift()
             if(folderS){
-                const note=await folderS.getNotes({where:{id:req.params.noteId}})
+                const note=await Note.findByPk(req.params.noteId)
                 const noteS=note.shift()
                 if(noteS){
                     await noteS.destroy()

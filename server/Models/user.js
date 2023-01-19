@@ -35,33 +35,16 @@ const User=sequelize.define("user",{
         allowNull:true,
         unique:true,
         validate:{
-            phoneValidation(number){
-                if(number.length<10){
-                    throw new Error("invalid phone number")
-                }
-            }
+            len:[10]
         }
     },
     enrlYear:{
         type:DataTypes.INTEGER,
-        allowNull:false,
-        validate:{
-            isValid(year){
-                if(year<1913){
-                    throw new Error("the faculty didn t exist in that time")
-                }
-            }
-        }
+        allowNull:false
     },
     finishYear:{
         type:DataTypes.INTEGER,
-        allowNull:false,
-        validate:{
-            isValid(year){
-            if(year<1913){
-                throw new Error("the faculty didn t exist in that time")
-            }
-        }}
+        allowNull:false
     },
 });
 

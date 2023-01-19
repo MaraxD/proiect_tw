@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
+import  {AiOutlineUser} from 'react-icons/ai'
+import {RiLockPasswordLine} from 'react-icons/ri'
 import './loginPage.css'
 
 
@@ -24,7 +26,8 @@ function LoginPage(){
         if(email.includes('@stud.ase.ro')){
             for(let u of users){
                 if(u.email===email && u.password===password){
-                    navigate('/mainPage')
+                    const userId=u.id
+                    navigate('/mainPage',{state:{user:userId}})
                 }else{
                     console.log('datele nu au fost gasite in BD')
                 }
@@ -42,35 +45,22 @@ function LoginPage(){
 
     return (
         <div className="auth-form">
-                {/* <div>
-                    <label htmlFor="email">email</label><br></br>
-                    <input value={email} onChange={(e)=> setEmail(e.target.value)} type="email" placeholder="blahblah@stud.ase.ro" className="email" name="email"/>
-                </div>
-                
-                <div>
-                    <label for="password">password</label><br></br>
-                    <input value={password} onChange={(e)=> setPassword(e.target.value)} type="password" placeholder="********" id="password" name="password"/>
-                </div>
-                
-               <button onClick={verifyData}>Log in</button> */}
-
                 <div class="box">
                     <div class="container">
                         <div class="top">
                             <span>ASE Notes</span>
-                            <header>Login</header>
+                            <header>Log in</header>
                         </div>
                         <div class="input-field">
                             <input type="text" class="input" placeholder="Username" id="" value={email} onChange={(e)=> setEmail(e.target.value)}/>
-                            <i class='bx bx-user' ></i> 
-                            {/* astea trebuia sa fie iconite? */}
+                             <AiOutlineUser className="bx"/> 
                         </div>
                         <div class="input-field">
                             <input type="Password" class="input" placeholder="Password" id="" value={password} onChange={(e)=> setPassword(e.target.value)}/>
-                            <i class='bx bx-lock-alt'></i>
+                            <RiLockPasswordLine className="bx"/>
                         </div>
                         <div class="input-field">
-                            <input type="submit" class="submit" value="Login" id="" onClick={verifyData}/>
+                            <input type="submit" class="submit" value="Log in" id="" onClick={verifyData}/>
                         </div>
                         <div class="two-col">
                             <div class="one">

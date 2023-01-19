@@ -1,8 +1,9 @@
 import { useState,useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs"
 import { FaUserCircle } from "react-icons/fa"
-import { AiOutlineFile, AiFillFolderOpen, AiFillPlusCircle } from "react-icons/ai"
+import { AiOutlineFile, AiFillFolderOpen,AiFillFolderAdd } from "react-icons/ai"
+import {TfiWrite} from 'react-icons/tfi'
 import {CiSaveDown2 } from "react-icons/ci"
 import {FiShare } from "react-icons/fi"
 import logo from './logo.png'
@@ -10,9 +11,12 @@ import logo from './logo.png'
 import './mainPage.css'
 
 const server="http://localhost:8080"
-const user="9c9722a8-82c9-47ca-83d8-2bc445a945a3"
+
 
 function MainPage(){ //props.data
+    const location=useLocation()
+    const user=location.state.user
+
     const[notes,setNotes]=useState([{}])
     const[folders,setFolders]=useState([{}]) //trebuie sa vad ce returneaza
 
@@ -28,12 +32,14 @@ function MainPage(){ //props.data
 
     const[newElem,setElem]=useState({})
     const[newF,setNewF]=useState({})
-    const[exitF,setExitF]=useState('')
+    const[openN,setOpenN]=useState('opened')
+    const[openF,setOpenF]=useState('')
     const[nameF, setNameF]=useState('Untitled folder')
     //din nou, nu stiu daca e chiar facut asa sau se putea mai usor
     const[nameN, setNameN]=useState('')
     const[contentN, setContentN]=useState('')
     const[idN, setIdN]=useState(0)
+    const[idF,setIdF]=useState(0) 
 
 
     const navigate=useNavigate()
@@ -145,24 +151,42 @@ function MainPage(){ //props.data
         getNotes()
     }
 
+    //adds note into folder into db
+    const addNoteIntoFolder=async()=>{
+        const res=await fetch(`${server}/api/users/${idF}/users/${user}`,
+        {
+            method:'POST',
+            headers:{
+                "Content-type":"application/json"
+            },body:JSON.stringify(newElem)
+        })
+        .then(console.log("note added into folder into db"))
+        getFolders()
+    }
+
 
     //created a note before inserting into the db
     const newNote=(e)=>{
-
+        //indiferent daca se pune in folder sau nu, asta e structura
         let titlu=document.getElementsByClassName('title')[0].value,
-            continut=document.getElementsByClassName('noteC')[0].value
+        continut=document.getElementsByClassName('noteC')[0].value
 
         newElem.title=titlu
         newElem.content=continut
         newElem.dateCreated='05/01/2023' //aici de schimbat
-
         setElem(newElem)
-        addNote()
+
+        if(openF==='opened'){
+            //se adauga notita in folderul respectiv
+            addNoteIntoFolder() //se aduga notita in folder in bd
+
+        }else if(openN==='opened'){
+            addNote()
+            setStateN('')
+        } 
+
         document.getElementsByClassName('title')[0].value=''
         document.getElementsByClassName('noteC')[0].value=''
-
-        setStateN('')
-
     }
 
     
@@ -181,22 +205,38 @@ function MainPage(){ //props.data
     }
 
     const deleteNote=()=>{
-        deleteNoteDB(idN)
-        notes.map((e)=>{
-            if(e.id===idN){
-                const index=notes.indexOf(e)
-                notes.splice(index,1)
-            }
-        })
+        if(openF==='opened'){
+            //se sterge notita din folderul respectiv
+            deleteNoteFDB() //se aduga notita in folder in bd
+
+        }else if(openN==='opened'){
+            deleteNoteDB()
+            notes.map((e)=>{
+                if(e.id===idN){
+                    const index=notes.indexOf(e)
+                    notes.splice(index,1)
+                }
+            })
+        } 
+        
         setStateD('')
     }
 
-    const deleteNoteDB=async(idN)=>{
+    const deleteNoteDB=async()=>{
         const res=await fetch(`${server}/api/users/${idN}/notes/${user}`,
         {
             method:'DELETE'
         })
         .then(console.log("note deleted from db"))
+        getNotes()
+    }
+
+    const deleteNoteFDB=async()=>{
+        const res=await fetch(`${server}/api/users/${idF}/users/${user}/notes/${idN}`,
+        {
+            method:'DELETE'
+        })
+        .then(console.log("note deleted from this folder in db"))
         getNotes()
     }
 
@@ -228,7 +268,6 @@ function MainPage(){ //props.data
    
 
     //OPERATIILE PENTRU FOLDERS
-    //trebuie testat
     const getFolders=async()=>{
         const res=await fetch(`${server}/api/users/${user}/folders`)
         const data=await res.json()
@@ -241,7 +280,7 @@ function MainPage(){ //props.data
             return folders.map((e)=>{
                 return(
                     <div>
-                        <li class="menu-item"><AiFillFolderOpen/>
+                        <li class="menu-item"><AiFillFolderOpen className='glyphicon'/>
                             <li onClick={openFolder}>{e.nameFolder}</li>
                         
                         </li>
@@ -254,6 +293,9 @@ function MainPage(){ //props.data
 
     //selected note FROM the folder
     const getSelectedNoteF=(e)=>{
+        folders.map((e)=>{
+
+        })
         setStateD('clickN')
         let noteFound=notes.find(elem=>elem.title===e.target.innerHTML)
         setNameN(noteFound.title)
@@ -279,9 +321,9 @@ function MainPage(){ //props.data
 
 
     const deleteFolder=()=>{
-       
         folders.map((e)=>{
-            if(e.nameFolder===nameF){ 
+            if(e.nameFolder===nameF){
+                setIdF(e.id) 
                 deleteFolderDB(e.id)
                 const index=folders.indexOf(e)
                 folders.splice(index,1)
@@ -301,16 +343,20 @@ function MainPage(){ //props.data
     
     const showDBtn=()=>{
         return(
-            <li class="edit-item" onClick={deleteFolder}><BsFillPencilFill/> Delete {nameF}</li>
+            <li class="edit-item" onClick={deleteFolder}>Delete {nameF}</li>
         )
     }
 
     const openFolder=(e)=>{
-        console.log(e.target.innerHTML)
         setNameF(e.target.innerHTML)
+
         setStateF('opened')
+        setOpenF('opened')
+        setOpenN('')
+        
+
         let folderFound=folders.find(folder=>folder.nameFolder===e.target.innerHTML)
-        console.log(folderFound)
+        setIdF(folderFound.id)
         setStateNS(folderFound.notes) //state notes (NS)
 
     }
@@ -341,7 +387,7 @@ function MainPage(){ //props.data
 
     const addFolder=()=>{
         return(
-                <li class="menu-item"><AiFillFolderOpen/> 
+                <li class="menu-item"><AiFillFolderOpen className='glyphicon'/> 
                     <input className='nameFolder' type="text" value={nameF} onChange={editNameF} onKeyDown={(e)=>{if(e.key==='Enter'){addFolderDB(); setStateF('')} }}/>
                 </li>
         )
@@ -360,54 +406,54 @@ function MainPage(){ //props.data
 
     return(
         <div className="mainPage">
+            <div className='navbar'>                        
+                <li><a class="logo"><img src={logo} alt=""/><span class="nav-item">Ase Notes</span></a></li>
+            </div>
             
             <div className="container">
-                <nav>
-                    <ul>
-                        <li><a class="logo"><img src={logo} alt=""/><span class="nav-item">Ase Notes</span></a></li>
-                        <li class="menu-item" onClick={handleClick}><AiOutlineFile/>Notes</li>
+                    <ul className='nav'>
+                        <li class="menu-item" onClick={handleClick}><AiOutlineFile className='glyphicon'/>Notes</li>
                         {showFolders()}
                         {stateF==='createdF'?addFolder():""}
-                        <li class="add-item" onClick={handleF}><AiFillPlusCircle/> Add Folder</li>
+                        <li class="add-item" onClick={handleF} title='Add folder'><AiFillFolderAdd className='glyphicon'/></li>
                         
 
                     </ul>
-                </nav>
             </div>
 
             <div className="search">
-                <nav1>
-                    <ul>
+               
+                    <ul className='nav1'>
                         <input type="text" placeholder="Search.." onChange={handleChange}/>                         
                         {stateC===''?"":state.query===''?addDiv():state.list.map(note=>{
                             return <div>{note.title}</div>
                         })}
 
+                        {/* afisare notite din folder */}
                         {stateF===''?"":addDivF()}
                     </ul>
-                </nav1>     
+                     
             </div>
 
             <div class="write">
-                <nav2>
-                    <ul>
+                    
+                    <ul className='nav2'>
+                        <li class="trash" onClick={deleteNote} title='Delete this note'><BsFillTrashFill className='glyphicon'/></li>
+                        <li class="save"><CiSaveDown2 className='glyphicon'/></li>
                         {stateN===''?"":addEditableDiv()}
                         {stateD===''?"":showSelectedNote()}
                         
                     </ul>
-                </nav2>
             </div>
+
             <div class="buttons">
-                <nav3>
-                    <ul>
-                        <li class="trash" onClick={deleteNote}><BsFillTrashFill/></li>
-                        <li class="save"><CiSaveDown2/></li>
-                        <li class="share"><FiShare/></li>
-                        <li class="plus" onClick={handleClickN}><AiFillPlusCircle/></li>   
-                        <li class="account" onClick={toAccount}><FaUserCircle/></li>
+                
+                    <ul className='nav3'>
+                        <li class="share" title='Add people to this note'><FiShare className='glyphicon'/></li>
+                        <li class="plus" onClick={handleClickN} title='Create a note'><TfiWrite className='glyphicon'/></li>   
+                        <li class="account" onClick={toAccount}><FaUserCircle className='glyphicon'/></li>
 
                     </ul>
-                </nav3>
             </div>
         </div>
     )
